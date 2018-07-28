@@ -1,4 +1,4 @@
-package com.wossha.auth;
+package com.wossha.clothing;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WosshaAuthApplicationTests {
+public class WosshaClothingApplicationTests {
 
 	@Test
 	public void contextLoads() {
