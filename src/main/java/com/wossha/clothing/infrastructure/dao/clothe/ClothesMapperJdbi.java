@@ -1,4 +1,4 @@
-package com.wossha.clothing.infrastructure.dao.user;
+package com.wossha.clothing.infrastructure.dao.clothe;
 
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
@@ -9,9 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ClothesMapperJdbi implements ResultSetMapper<ClotheDTO> {
-	
-	ClotheDTO clothe = null;
-	
+
     @Override
     public ClotheDTO map(int index, ResultSet r, StatementContext ctx) throws SQLException {
         

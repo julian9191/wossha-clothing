@@ -1,4 +1,4 @@
-package com.wossha.clothing.infrastructure.dao.user;
+package com.wossha.clothing.infrastructure.dao.clothe;
 
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.BindBean;
