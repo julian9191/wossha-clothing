@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.skife.jdbi.v2.IDBI;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
+import com.wossha.clothing.infrastructure.dao.brand.BrandDao;
 import com.wossha.clothing.infrastructure.dao.clothe.ClothesDao;
 import com.wossha.clothing.infrastructure.dao.clothingcategory.ClothingCategoryDao;
 import com.wossha.clothing.infrastructure.dao.clothingtype.ClothingTypeDao;
@@ -19,6 +22,7 @@ public class ClotheRepository implements Repository<ClotheDTO> {
 	private ClothesDao clothesDao;
 	private ClothingTypeDao clothingTypeDao;
 	private ClothingCategoryDao clothingCategoryDao;
+	private BrandDao brandDao;
     
 	@Override
 	public void add(ClotheDTO clothe) {
@@ -45,6 +49,18 @@ public class ClotheRepository implements Repository<ClotheDTO> {
 		clothingTypeDao = dbi.onDemand(ClothingTypeDao.class);
 		word = "%" + word.toUpperCase() + "%";
     	return clothingTypeDao.searchClothingTypes(word);
+	}
+	
+	public List<ClothingCategoryDTO> searchClothingCategories(String word) {
+		clothingCategoryDao = dbi.onDemand(ClothingCategoryDao.class);
+		word = "%" + word.toUpperCase() + "%";
+    	return clothingCategoryDao.searchClothingCategories(word);
+	}
+	
+	public List<BrandDTO> searchBrands(String word) {
+		brandDao = dbi.onDemand(BrandDao.class);
+		word = "%" + word.toUpperCase() + "%";
+    	return brandDao.searchBrands(word);
 	}
 	
     @Override

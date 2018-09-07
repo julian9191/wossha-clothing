@@ -19,7 +19,7 @@ public abstract  class ClothingTypeDao {
     public abstract List<ClothingTypeDTO> getAllClothingTypes();
 	
 	@RegisterMapper(ClothingTypeMapperJdbi.class)
-	@SqlQuery("SELECT * FROM TWSS_CLOTHING_TYPES WHERE NAME LIKE :word order by NAME")
+	@SqlQuery("SELECT * FROM TWSS_CLOTHING_TYPES WHERE NAME LIKE :word order by NAME FETCH FIRST 5 ROWS ONLY")
     public abstract List<ClothingTypeDTO> searchClothingTypes(@Bind("word") String word);
 
 }

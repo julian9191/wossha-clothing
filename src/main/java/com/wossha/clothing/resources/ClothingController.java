@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
@@ -41,6 +43,18 @@ public class ClothingController extends ControllerWrapper{
 	@GetMapping(value = "/search-clouthing-type/{word}")
 	public @ResponseBody List<ClothingTypeDTO> searchClothingTypes(@PathVariable String word) {
 		List<ClothingTypeDTO> c = repo.searchClothingTypes(word);
+		return c;
+	}
+	
+	@GetMapping(value = "/search-clouthing-category/{word}")
+	public @ResponseBody List<ClothingCategoryDTO> searchClothingCategories(@PathVariable String word) {
+		List<ClothingCategoryDTO> c = repo.searchClothingCategories(word);
+		return c;
+	}
+	
+	@GetMapping(value = "/search-brand/{word}")
+	public @ResponseBody List<BrandDTO> searchBrands(@PathVariable String word) {
+		List<BrandDTO> c = repo.searchBrands(word);
 		return c;
 	}
 		
