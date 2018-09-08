@@ -5,10 +5,12 @@ import java.util.List;
 import org.skife.jdbi.v2.IDBI;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
+import com.wossha.clothing.infrastructure.dao.basecolor.BaseColorDao;
 import com.wossha.clothing.infrastructure.dao.brand.BrandDao;
 import com.wossha.clothing.infrastructure.dao.clothe.ClothesDao;
 import com.wossha.clothing.infrastructure.dao.clothingcategory.ClothingCategoryDao;
@@ -23,7 +25,8 @@ public class ClotheRepository implements Repository<ClotheDTO> {
 	private ClothingTypeDao clothingTypeDao;
 	private ClothingCategoryDao clothingCategoryDao;
 	private BrandDao brandDao;
-    
+    private BaseColorDao baseColorDao;
+	
 	@Override
 	public void add(ClotheDTO clothe) {
 		clothesDao = dbi.onDemand(ClothesDao.class);
@@ -61,6 +64,11 @@ public class ClotheRepository implements Repository<ClotheDTO> {
 		brandDao = dbi.onDemand(BrandDao.class);
 		word = "%" + word.toUpperCase() + "%";
     	return brandDao.searchBrands(word);
+	}
+	
+	public List<BaseColorDTO> getAllBaseColors() {
+		baseColorDao = dbi.onDemand(BaseColorDao.class);
+    	return baseColorDao.getAllBaseColors();
 	}
 	
     @Override

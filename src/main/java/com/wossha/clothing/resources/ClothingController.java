@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
@@ -39,6 +40,15 @@ public class ClothingController extends ControllerWrapper{
 		List<ClothingCategoryDTO> c = repo.getAllClothingCategories();
 		return c;
 	}
+	
+	@GetMapping(value = "/base-colors")
+	public @ResponseBody List<BaseColorDTO> getAllBaseColors() {
+		List<BaseColorDTO> c = repo.getAllBaseColors();
+		return c;
+	}
+	
+	
+	//SEARCH----------------------------------------------------------------------------------------------------------
 	
 	@GetMapping(value = "/search-clouthing-type/{word}")
 	public @ResponseBody List<ClothingTypeDTO> searchClothingTypes(@PathVariable String word) {
