@@ -16,12 +16,12 @@ public class ClotheDTO {
 	private String brand;
 	private Integer state;
 	private String colorCode;
-	private String colorName;
+	private Integer baseColor;
 	
 	
 	public ClotheDTO(Integer id, String uuid, String username, String name, String description, String type,
 			String category, Timestamp purchaseDate, Integer howLike, String brand, Integer state, String colorCode,
-			String colorName) {
+			Integer baseColor) {
 		
 		this.id = id;
 		this.uuid = uuid;
@@ -35,7 +35,7 @@ public class ClotheDTO {
 		this.brand = brand;
 		this.state = state;
 		this.colorCode = colorCode;
-		this.colorName = colorName;
+		this.baseColor = baseColor;
 	}
 
 	public ClotheDTO() {}
@@ -160,13 +160,13 @@ public class ClotheDTO {
 	}
 
 
-	public String getColorName() {
-		return colorName;
+	public Integer getBaseColor() {
+		return baseColor;
 	}
 
 
-	public void setColorName(String colorName) {
-		this.colorName = colorName;
+	public void setBaseColor(Integer baseColor) {
+		this.baseColor = baseColor;
 	}
 
 }
