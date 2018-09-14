@@ -1,6 +1,8 @@
 package com.wossha.clothing.infrastructure.repositories;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.skife.jdbi.v2.IDBI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,13 @@ import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
+import com.wossha.clothing.dto.ColorDTO;
 import com.wossha.clothing.infrastructure.dao.basecolor.BaseColorDao;
 import com.wossha.clothing.infrastructure.dao.brand.BrandDao;
 import com.wossha.clothing.infrastructure.dao.clothe.ClothesDao;
 import com.wossha.clothing.infrastructure.dao.clothingcategory.ClothingCategoryDao;
 import com.wossha.clothing.infrastructure.dao.clothingtype.ClothingTypeDao;
+import com.wossha.clothing.infrastructure.dao.color.ColorDao;
 
 public class ClotheRepository implements Repository<ClotheDTO> {
 
@@ -26,6 +30,7 @@ public class ClotheRepository implements Repository<ClotheDTO> {
 	private ClothingCategoryDao clothingCategoryDao;
 	private BrandDao brandDao;
     private BaseColorDao baseColorDao;
+    private ColorDao colorDao;
 	
 	@Override
 	public void add(ClotheDTO clothe) {
@@ -71,6 +76,24 @@ public class ClotheRepository implements Repository<ClotheDTO> {
     	return baseColorDao.getAllBaseColors();
 	}
 	
+	public List<ColorDTO> getAllColors() {
+		colorDao = dbi.onDemand(ColorDao.class);
+    	return colorDao.getAllColors();
+	}
+	
+	public Map<String, Integer> getColorsMap() {
+		colorDao = dbi.onDemand(ColorDao.class);
+		List<ColorDTO> colorsList = colorDao.getAllColors();
+		Map<String, Integer> colorsMap = new HashMap<String, Integer>();
+		for (ColorDTO color : colorsList) {
+			if(!colorsMap.containsKey(color.getHexa())) {
+				colorsMap.put("#"+color.getHexa(), color.getBaseColor());
+			}
+		}
+
+    	return colorsMap; 
+	}
+	
     @Override
     public void update(ClotheDTO clothe) {
 
@@ -80,5 +103,4 @@ public class ClotheRepository implements Repository<ClotheDTO> {
     public void remove(ClotheDTO clothe) {
     	
     }
-
 }

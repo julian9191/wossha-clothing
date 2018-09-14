@@ -14,8 +14,11 @@ import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
+import com.wossha.clothing.dto.ColorDTO;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import java.util.List;
+import java.util.Map;
+
 import com.wossha.msbase.controllers.ControllerWrapper;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -44,6 +47,12 @@ public class ClothingController extends ControllerWrapper{
 	@GetMapping(value = "/base-colors")
 	public @ResponseBody List<BaseColorDTO> getAllBaseColors() {
 		List<BaseColorDTO> c = repo.getAllBaseColors();
+		return c;
+	}
+	
+	@GetMapping(value = "/colors-map")
+	public @ResponseBody Map<String, Integer> getColorsMap() {
+		Map<String, Integer> c = repo.getColorsMap();
 		return c;
 	}
 	

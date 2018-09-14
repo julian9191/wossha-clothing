@@ -26,7 +26,7 @@ public class ClothesMapperJdbi implements ResultSetMapper<ClotheDTO> {
                 r.getString("BRAND"),
                 r.getInt("STATE"),
                 r.getString("COLOR_CODE"),
-                r.getString("COLOR_NAME")
+                r.getInt("BASE_COLOR")
         );
         
     }
