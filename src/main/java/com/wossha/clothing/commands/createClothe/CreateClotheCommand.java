@@ -8,6 +8,7 @@ import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import com.wossha.msbase.controllers.commands.ICommand;
 import com.wossha.msbase.exceptions.BusinessException;
 import com.wossha.msbase.exceptions.TechnicalException;
+import com.wossha.msbase.services.UUIDGenerator;
 
 @Component
 public class CreateClotheCommand implements ICommand<CreateClothe>{
@@ -40,6 +41,7 @@ public class CreateClotheCommand implements ICommand<CreateClothe>{
 			data.getClothe().setType(data.getClothe().getType().toUpperCase());
 			data.getClothe().setCategory(data.getClothe().getCategory().toUpperCase());
 			data.getClothe().setBrand(data.getClothe().getBrand().toUpperCase());
+			data.getClothe().setUuid(UUIDGenerator.generateUUID());
 			repo.add(data.getClothe());
 			return "La prenda se ha creado correctamente";
 		}catch (Exception e) {
