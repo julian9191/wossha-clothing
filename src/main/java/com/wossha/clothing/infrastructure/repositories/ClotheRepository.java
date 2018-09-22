@@ -19,6 +19,7 @@ import com.wossha.clothing.infrastructure.dao.clothe.ClothesDao;
 import com.wossha.clothing.infrastructure.dao.clothingcategory.ClothingCategoryDao;
 import com.wossha.clothing.infrastructure.dao.clothingtype.ClothingTypeDao;
 import com.wossha.clothing.infrastructure.dao.color.ColorDao;
+import com.wossha.msbase.models.Pagination;
 
 public class ClotheRepository implements Repository<ClotheDTO> {
 
@@ -41,6 +42,18 @@ public class ClotheRepository implements Repository<ClotheDTO> {
 	public ClotheDTO findClotheByUuid(String uuid) {
 		clothesDao = dbi.onDemand(ClothesDao.class);
     	return clothesDao.findClotheByUuid(uuid);
+	}
+	
+	public Map<String, Object> findClothesByUser(String username, String orderedBy, int init, int limit) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		Integer count = clothesDao.countFindAllClothesByUser(username);
+		List<ClotheDTO> clothes = clothesDao.findClothesByUser(username, init, limit, orderedBy);
+		
+		Pagination pagination = new Pagination(count, init, limit);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("pagination", pagination);
+        resultMap.put("result", clothes);
+        return resultMap;
 	}
 	
 	public List<ClothingTypeDTO> getAllClothingTypes() {
@@ -103,4 +116,6 @@ public class ClotheRepository implements Repository<ClotheDTO> {
     public void remove(ClotheDTO clothe) {
     	
     }
+
+	
 }

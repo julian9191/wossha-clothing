@@ -77,6 +77,14 @@
             <version>2.62</version>
         </dependency>
         
+        <!-- to directly allow changes to the sql code dynamically -->
+		<dependency>
+		    <groupId>org.antlr</groupId>
+		    <artifactId>stringtemplate</artifactId>
+		    <version>3.2</version>
+		</dependency>
+
+        
         <dependency>
             <groupId>com.wossha.msbase</groupId>
             <artifactId>wossha-msbase</artifactId>
