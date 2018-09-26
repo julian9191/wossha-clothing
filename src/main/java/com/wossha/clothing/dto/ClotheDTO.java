@@ -17,6 +17,7 @@ public class ClotheDTO {
 	private Integer state;
 	private String colorCode;
 	private Integer baseColor;
+	private PictureFileDTO picture;
 	
 	
 	public ClotheDTO(Integer id, String uuid, String username, String name, String description, String type,
@@ -36,6 +37,26 @@ public class ClotheDTO {
 		this.state = state;
 		this.colorCode = colorCode;
 		this.baseColor = baseColor;
+	}
+	
+	public ClotheDTO(Integer id, String uuid, String username, String name, String description, String type,
+			String category, Timestamp purchaseDate, Integer howLike, String brand, Integer state, String colorCode,
+			Integer baseColor, PictureFileDTO picture) {
+		
+		this.id = id;
+		this.uuid = uuid;
+		this.username = username;
+		this.name = name;
+		this.description = description;
+		this.type = type;
+		this.category = category;
+		this.purchaseDate = purchaseDate;
+		this.howLike = howLike;
+		this.brand = brand;
+		this.state = state;
+		this.colorCode = colorCode;
+		this.baseColor = baseColor;
+		this.picture = picture;
 	}
 
 	public ClotheDTO() {}
@@ -168,5 +189,15 @@ public class ClotheDTO {
 	public void setBaseColor(Integer baseColor) {
 		this.baseColor = baseColor;
 	}
+
+	public PictureFileDTO getPicture() {
+		return picture;
+	}
+
+	public void setPicture(PictureFileDTO picture) {
+		this.picture = picture;
+	}
+	
+	
 
 }

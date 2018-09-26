@@ -42,7 +42,7 @@ public class CreateClotheCommand implements ICommand<CreateClothe>{
 			data.getClothe().setCategory(data.getClothe().getCategory().toUpperCase());
 			data.getClothe().setBrand(data.getClothe().getBrand().toUpperCase());
 			data.getClothe().setUuid(UUIDGenerator.generateUUID());
-			repo.add(data.getClothe());
+			//repo.add(data.getClothe());
 			return "La prenda se ha creado correctamente";
 		}catch (Exception e) {
 			e.printStackTrace();
