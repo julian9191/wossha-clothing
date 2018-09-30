@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.wossha.clothing.commands.createClothe.model.CreateClothe;
+import com.wossha.clothing.dto.ClotheDTO;
+import com.wossha.clothing.infrastructure.mapper.MapperDozer;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import com.wossha.msbase.controllers.commands.ICommand;
 import com.wossha.msbase.exceptions.BusinessException;
@@ -15,6 +17,7 @@ public class CreateClotheCommand implements ICommand<CreateClothe>{
 	
 	private CreateClothe data;
 	private String user;
+	private MapperDozer map = new MapperDozer();
 	
 	@Autowired
 	private ClotheRepository repo;
@@ -42,7 +45,15 @@ public class CreateClotheCommand implements ICommand<CreateClothe>{
 			data.getClothe().setCategory(data.getClothe().getCategory().toUpperCase());
 			data.getClothe().setBrand(data.getClothe().getBrand().toUpperCase());
 			data.getClothe().setUuid(UUIDGenerator.generateUUID());
-			//repo.add(data.getClothe());
+			
+			ClotheDTO clotheDTO = map.mapClotheDTOToClothe(data.getClothe());
+			
+			if(data.getClothe().getPicture()!=null) {
+				String uuIDImage = UUIDGenerator.generateUUID();
+				clotheDTO.setPicture(uuIDImage);
+			}
+			
+			repo.addClothe(clotheDTO);
 			return "La prenda se ha creado correctamente";
 		}catch (Exception e) {
 			e.printStackTrace();

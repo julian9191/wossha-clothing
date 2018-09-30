@@ -1,8 +1,10 @@
-package com.wossha.clothing.dto;
+package com.wossha.clothing.commands.createClothe.model;
 
 import java.sql.Timestamp;
 
-public class ClotheDTO {
+import com.wossha.clothing.dto.PictureFileDTO;
+
+public class Clothe {
 	
 	private Integer id;
 	private String uuid;
@@ -17,10 +19,10 @@ public class ClotheDTO {
 	private Integer state;
 	private String colorCode;
 	private Integer baseColor;
-	private String picture;
+	private PictureFileDTO picture;
 	
 	
-	public ClotheDTO(Integer id, String uuid, String username, String name, String description, String type,
+	public Clothe(Integer id, String uuid, String username, String name, String description, String type,
 			String category, Timestamp purchaseDate, Integer howLike, String brand, Integer state, String colorCode,
 			Integer baseColor) {
 		
@@ -39,9 +41,9 @@ public class ClotheDTO {
 		this.baseColor = baseColor;
 	}
 	
-	public ClotheDTO(Integer id, String uuid, String username, String name, String description, String type,
+	public Clothe(Integer id, String uuid, String username, String name, String description, String type,
 			String category, Timestamp purchaseDate, Integer howLike, String brand, Integer state, String colorCode,
-			Integer baseColor, String picture) {
+			Integer baseColor, PictureFileDTO picture) {
 		
 		this.id = id;
 		this.uuid = uuid;
@@ -59,7 +61,7 @@ public class ClotheDTO {
 		this.picture = picture;
 	}
 
-	public ClotheDTO() {}
+	public Clothe() {}
 
 	public Integer getId() {
 		return id;
@@ -190,11 +192,11 @@ public class ClotheDTO {
 		this.baseColor = baseColor;
 	}
 
-	public String getPicture() {
+	public PictureFileDTO getPicture() {
 		return picture;
 	}
 
-	public void setPicture(String picture) {
+	public void setPicture(PictureFileDTO picture) {
 		this.picture = picture;
 	}
 	

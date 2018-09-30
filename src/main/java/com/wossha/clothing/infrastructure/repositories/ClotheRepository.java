@@ -7,6 +7,7 @@ import java.util.Map;
 import org.skife.jdbi.v2.IDBI;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.wossha.clothing.commands.createClothe.model.Clothe;
 import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClotheDTO;
@@ -21,7 +22,7 @@ import com.wossha.clothing.infrastructure.dao.clothingtype.ClothingTypeDao;
 import com.wossha.clothing.infrastructure.dao.color.ColorDao;
 import com.wossha.msbase.models.Pagination;
 
-public class ClotheRepository implements Repository<ClotheDTO> {
+public class ClotheRepository implements Repository<Clothe> {
 
 	@Autowired
 	private IDBI dbi;
@@ -34,7 +35,11 @@ public class ClotheRepository implements Repository<ClotheDTO> {
     private ColorDao colorDao;
 	
 	@Override
-	public void add(ClotheDTO clothe) {
+	public void add(Clothe clothe) {
+		
+	}
+	
+	public void addClothe(ClotheDTO clothe) {
 		clothesDao = dbi.onDemand(ClothesDao.class);
     	clothesDao.add(clothe);
 	}
@@ -108,12 +113,12 @@ public class ClotheRepository implements Repository<ClotheDTO> {
 	}
 	
     @Override
-    public void update(ClotheDTO clothe) {
+    public void update(Clothe clothe) {
 
     }
 
     @Override
-    public void remove(ClotheDTO clothe) {
+    public void remove(Clothe clothe) {
     	
     }
 

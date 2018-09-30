@@ -1,15 +1,14 @@
 package com.wossha.clothing.commands.createClothe.model;
 
-import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.msbase.controllers.commands.CommandModel;
 
 public class CreateClothe extends CommandModel{
-    private ClotheDTO clothe;
+    private Clothe clothe;
     
-	public ClotheDTO getClothe() {
+	public Clothe getClothe() {
 		return clothe;
 	}
-	public void setClothe(ClotheDTO clothe) {
+	public void setClothe(Clothe clothe) {
 		this.clothe = clothe;
 	}
 

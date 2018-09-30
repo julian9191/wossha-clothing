@@ -2,7 +2,6 @@ package com.wossha.clothing.infrastructure.dao.clothe;
 
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
-
 import com.wossha.clothing.dto.ClotheDTO;
 
 import java.sql.ResultSet;
@@ -26,7 +25,8 @@ public class ClothesMapperJdbi implements ResultSetMapper<ClotheDTO> {
                 r.getString("BRAND"),
                 r.getInt("STATE"),
                 r.getString("COLOR_CODE"),
-                r.getInt("BASE_COLOR")
+                r.getInt("BASE_COLOR"),
+                r.getString("PICTURE")
         );
         
     }
