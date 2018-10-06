@@ -7,6 +7,7 @@ import com.wossha.clothing.commands.CommandSerializers;
 import com.wossha.clothing.commands.createClothe.CreateClotheCommand;
 import com.wossha.clothing.commands.createClothe.CreateClotheSerializer;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
+import com.wossha.clothing.infrastructure.jms.EventSerializers;
 
 @Configuration
 public class BeansConfig {
@@ -33,6 +34,14 @@ public class BeansConfig {
 		cs.setModifyUserSerializer(createClotheSerializer());
 		cs.initMapper();
 		return cs;
+	}
+	
+	@Bean
+	public EventSerializers eventSerializers() {
+		EventSerializers es = new EventSerializers();
+		//es.setSavePictureEventSerializer(savePictureEventSerializer());
+		es.initMapper();
+		return es;
 	}
 	
 }

@@ -1,6 +1,6 @@
 package com.wossha.clothing.commands.createClothe.model;
 
-import com.wossha.msbase.controllers.commands.CommandModel;
+import com.wossha.msbase.commands.CommandModel;
 
 public class CreateClothe extends CommandModel{
     private Clothe clothe;

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wossha.clothing.commands.createClothe.CreateClotheSerializer;
-import com.wossha.msbase.controllers.commands.ICommandSerializer;
+import com.wossha.msbase.commands.ICommandSerializer;
 
 @Service
 public class CommandSerializers {
