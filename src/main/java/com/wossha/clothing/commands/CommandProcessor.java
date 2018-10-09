@@ -3,11 +3,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.jms.Queue;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
@@ -40,10 +39,10 @@ public class CommandProcessor extends ControllerWrapper{
     CommandSerializers commandSerializers;
     
     @Autowired
-    JmsTemplate jmsTemplate;
+	private Environment env;
     
     @Autowired
-    Queue queue;
+    JmsTemplate jmsTemplate;
 
     @PostMapping("/commands")
     public ResponseEntity<HashMap<String, String>> processCommand(@RequestBody String json) {
@@ -77,6 +76,7 @@ public class CommandProcessor extends ControllerWrapper{
 		for (Event event : events) {
 			ObjectMapper mapper = new ObjectMapper();
 			String jsonEvent = mapper.writeValueAsString(event);
+			String queue = env.getProperty("EVENT."+event.getName()+".QUEUES");
 			jmsTemplate.convertAndSend(queue, jsonEvent);
 		}
 	}
