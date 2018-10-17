@@ -61,6 +61,7 @@ public class CommandProcessor extends ControllerWrapper{
     		String username = auth.getPrincipal().toString();
             command.setUsername(username);
             CommandResult result = command.execute();
+            logger.debug("command generated: "+json);
 
             publishEvents(result.getEvents());
 

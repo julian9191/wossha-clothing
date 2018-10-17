@@ -2,7 +2,7 @@ package com.wossha.clothing.commands.createClothe.model;
 
 import java.sql.Timestamp;
 
-import com.wossha.clothing.dto.PictureFileDTO;
+import com.wossha.msbase.models.PictureFileDTO;
 
 public class Clothe {
 	
