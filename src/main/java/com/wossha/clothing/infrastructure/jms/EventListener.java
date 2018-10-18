@@ -22,7 +22,7 @@ public class EventListener {
 	@Autowired
 	EventSerializers eventSerializers;
 	
-	@JmsListener(destination = "pictures.queue")
+	//@JmsListener(destination = "pictures.queue")
     public void consume(String json) {
         
         try {

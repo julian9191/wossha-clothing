@@ -79,7 +79,7 @@ public class CreateClotheCommand implements ICommand<CreateClothe> {
 	private SavePictureEvent generateSavePictureEvent(String uuidPicture, String picName, String fileType,
 			Integer fileSize, String value) {
 		Message message = new Message(uuidPicture, picName, fileType, PictureTypesEnum.CLOTHE_PICTURE.name(), fileSize,
-				value);
+				value, null);
 		SavePictureEvent event = new SavePictureEvent(WosshaClothingApplication.APP_NAME, this.username, message);
 		return event;
 	}
