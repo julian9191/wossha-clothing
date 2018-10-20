@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.BrandDTO;
+import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
@@ -70,6 +71,15 @@ public class ClothingController extends ControllerWrapper {
 	@GetMapping(value = "/colors-map")
 	public @ResponseBody Map<String, Integer> getColorsMap() {
 		Map<String, Integer> c = repo.getColorsMap();
+		return c;
+	}
+	
+	@GetMapping(value = "/clothe/{uuid}")
+	public @ResponseBody ClotheDTO getClothe(@PathVariable String uuid) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getPrincipal().toString();
+
+		ClotheDTO c = repo.findClotheByUuid(username, uuid);
 		return c;
 	}
 

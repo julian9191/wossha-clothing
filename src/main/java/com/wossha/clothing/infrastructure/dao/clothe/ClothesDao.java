@@ -29,6 +29,10 @@ public abstract  class ClothesDao {
     public abstract List<ClotheDTO> findClothesByUser(@Bind("username") String username, @Bind("init") int init, @Bind("limit") int limit, @Define("orderedBy") String orderedBy);
 	
 	@RegisterMapper(ClothesMapperJdbi.class)
+	@SqlQuery("SELECT * FROM TWSS_CLOTHES WHERE USERNAME = :username AND UUID = :uuid")
+    public abstract ClotheDTO findClotheByUuid(@Bind("username") String username, @Bind("uuid") String uuid);
+	
+	@RegisterMapper(ClothesMapperJdbi.class)
 	@SqlQuery("SELECT COUNT(0) FROM TWSS_CLOTHES WHERE USERNAME = :username")
     public abstract Integer countFindAllClothesByUser(@Bind("username") String username);
     

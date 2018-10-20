@@ -61,6 +61,11 @@ public class ClotheRepository implements Repository<Clothe> {
         return resultMap;
 	}
 	
+	public ClotheDTO findClotheByUuid(String username, String uuid) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		return clothesDao.findClotheByUuid(username, uuid);
+	}
+	
 	public List<ClothingTypeDTO> getAllClothingTypes() {
 		clothingTypeDao = dbi.onDemand(ClothingTypeDao.class);
     	return clothingTypeDao.getAllClothingTypes();
