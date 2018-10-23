@@ -54,6 +54,13 @@ public abstract  class ClothesDao {
     public abstract void updateWithoutPicture(@BindBean("clothe") ClotheDTO clothe);
 
     
+    //REMOVES----------------------------------------------------------------------------------------------------------------------------------------
+    @RegisterMapper(ClothesMapperJdbi.class)
+    @SqlUpdate("DELETE FROM TWSS_CLOTHES WHERE UUID=:uuid")
+    public abstract void remove(@Bind("uuid") String uuid);
+
+    
+    
     public abstract void close();
 
 }

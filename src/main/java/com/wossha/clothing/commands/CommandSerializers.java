@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.wossha.clothing.commands.createClothe.CreateClotheSerializer;
 import com.wossha.clothing.commands.editClothe.EditClotheSerializer;
+import com.wossha.clothing.commands.removeClothe.RemoveClotheSerializer;
 import com.wossha.msbase.commands.ICommandSerializer;
 
 @Service
@@ -18,10 +19,12 @@ public class CommandSerializers {
     //serializers
     private CreateClotheSerializer createClotheSerializer;
     private EditClotheSerializer editClotheSerializer;
+    private RemoveClotheSerializer removeClotheSerializer;
 
 	public void initMapper() {
         processors.put("CreateClothe", createClotheSerializer);
         processors.put("EditClothe", editClotheSerializer);
+        processors.put("RemoveClothe", removeClotheSerializer);
     }
 
     public ICommandSerializer get(String commandName) {
@@ -34,5 +37,10 @@ public class CommandSerializers {
     
     public void setEditClotheSerializer(EditClotheSerializer editClotheSerializer) {
 		this.editClotheSerializer = editClotheSerializer;
+	}
+
+	public void setRemoveClotheSerializer(RemoveClotheSerializer removeClotheSerializer) {
+		this.removeClotheSerializer = removeClotheSerializer;
+		
 	}
 }

@@ -8,6 +8,8 @@ import com.wossha.clothing.commands.createClothe.CreateClotheCommand;
 import com.wossha.clothing.commands.createClothe.CreateClotheSerializer;
 import com.wossha.clothing.commands.editClothe.EditClotheCommand;
 import com.wossha.clothing.commands.editClothe.EditClotheSerializer;
+import com.wossha.clothing.commands.removeClothe.RemoveClotheCommand;
+import com.wossha.clothing.commands.removeClothe.RemoveClotheSerializer;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import com.wossha.clothing.infrastructure.jms.EventSerializers;
 
@@ -30,6 +32,11 @@ public class BeansConfig {
 		return new EditClotheCommand();
 	}
 	
+	@Bean
+	public RemoveClotheCommand removeClotheCommand() {
+		return new RemoveClotheCommand();
+	}
+	
 	
 	//serializers--------------------------------------------------
 	@Bean
@@ -43,10 +50,20 @@ public class BeansConfig {
 	}
 	
 	@Bean
+	public RemoveClotheSerializer removeClotheSerializer() {
+		return new RemoveClotheSerializer();
+	}
+	
+	
+	
+	//--------------------------------------------------------------
+	
+	@Bean
 	public CommandSerializers commandSerializers() {
 		CommandSerializers cs = new CommandSerializers();
 		cs.setCreateClotheSerializerr(createClotheSerializer());
 		cs.setEditClotheSerializer(editClotheSerializer());
+		cs.setRemoveClotheSerializer(removeClotheSerializer());
 		cs.initMapper();
 		return cs;
 	}

@@ -128,6 +128,11 @@ public class ClotheRepository implements Repository<Clothe> {
     	
 	}
 	
+	public void removeClothe(String uuid) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		clothesDao.remove(uuid);		
+	}
+	
     @Override
     public void update(Clothe clothe) {
 
@@ -137,6 +142,8 @@ public class ClotheRepository implements Repository<Clothe> {
     public void remove(Clothe clothe) {
     	
     }
+
+	
 
 	
 }
