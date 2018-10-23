@@ -45,9 +45,13 @@ public abstract  class ClothesDao {
     
     //UPDATES----------------------------------------------------------------------------------------------------------------------------------------
     
-    //@RegisterMapper(ClothesMapperJdbi.class)
-    //@SqlUpdate("UPDATE TWSS_USERS SET FIRST_NAME=:user.firstName, LAST_NAME=:user.lastName, EMAIL=:user.email, BIRTHDAY=:user.birthday, ABOUT=:user.about, COUNTRY_ID=:user.country, GENDER=:user.gender, MODIFIED=SYSDATE WHERE USERNAME=:user.username")
-    //public abstract void update(@BindBean("user") UserRecord user);
+    @RegisterMapper(ClothesMapperJdbi.class)
+    @SqlUpdate("UPDATE TWSS_CLOTHES SET NAME = :clothe.name, DESCRIPTION = :clothe.description, TYPE = :clothe.type, CATEGORY = :clothe.category, PURCHASE_DATE = :clothe.purchaseDate, HOW_LIKE = :clothe.howLike, BRAND = :clothe.brand, COLOR_CODE = :clothe.colorCode, BASE_COLOR = :clothe.baseColor, PICTURE = :clothe.picture, MODIFIED=SYSDATE WHERE UUID=:clothe.uuid")
+    public abstract void updateWithPicture(@BindBean("clothe") ClotheDTO clothe);
+    
+    @RegisterMapper(ClothesMapperJdbi.class)
+    @SqlUpdate("UPDATE TWSS_CLOTHES SET NAME = :clothe.name, DESCRIPTION = :clothe.description, TYPE = :clothe.type, CATEGORY = :clothe.category, PURCHASE_DATE = :clothe.purchaseDate, HOW_LIKE = :clothe.howLike, BRAND = :clothe.brand, COLOR_CODE = :clothe.colorCode, BASE_COLOR = :clothe.baseColor, MODIFIED=SYSDATE WHERE UUID=:clothe.uuid")
+    public abstract void updateWithoutPicture(@BindBean("clothe") ClotheDTO clothe);
 
     
     public abstract void close();

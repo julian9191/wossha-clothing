@@ -117,6 +117,17 @@ public class ClotheRepository implements Repository<Clothe> {
     	return colorsMap; 
 	}
 	
+	public void updateClothe(ClotheDTO clothe) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		if(clothe.getPicture()==null) {
+			clothesDao.updateWithoutPicture(clothe);
+		}else {
+			clothesDao.updateWithPicture(clothe);
+		}
+    	
+    	
+	}
+	
     @Override
     public void update(Clothe clothe) {
 

@@ -2,6 +2,10 @@ package com.wossha.clothing.dto;
 
 import java.sql.Timestamp;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ClotheDTO {
 	
 	private Integer id;
@@ -11,7 +15,13 @@ public class ClotheDTO {
 	private String description;
 	private String type;
 	private String category;
+	
+	// Formats output date when this DTO is passed through JSON
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    // Allows yyyy-MM-dd date to be passed into GET request in JSON
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Timestamp purchaseDate;
+    
 	private Integer howLike;
 	private String brand;
 	private Integer state;
