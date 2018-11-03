@@ -6,10 +6,14 @@ public class BaseColorDTO {
 	private String hexa;
 	
 	public BaseColorDTO(Integer id, String name, String hexa) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.hexa = hexa;
+	}
+	
+	public BaseColorDTO(Integer id, String name) {
+		this.id = id;
+		this.name = name;
 	}
 	
 	public BaseColorDTO() {}

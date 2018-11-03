@@ -15,6 +15,7 @@ import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
+import com.wossha.clothing.dto.SearchCriteriaParamsDTO;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import java.util.List;
 import java.util.Map;
@@ -100,6 +101,17 @@ public class ClothingController extends ControllerWrapper {
 	@GetMapping(value = "/search-brand/{word}")
 	public @ResponseBody List<BrandDTO> searchBrands(@PathVariable String word) {
 		List<BrandDTO> c = repo.searchBrands(word);
+		return c;
+	}
+	
+	// SEARCH CRITERIA-------------------------------------------------------------------------------------------------------
+	
+	@GetMapping(value = "/search-criteria-params")
+	public @ResponseBody SearchCriteriaParamsDTO getSearchCriteriaParamsByUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getPrincipal().toString();
+		
+		SearchCriteriaParamsDTO c = repo.getSearchCriteriaParamsByUser(username);
 		return c;
 	}
 

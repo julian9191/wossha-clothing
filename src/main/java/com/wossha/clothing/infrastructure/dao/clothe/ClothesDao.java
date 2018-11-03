@@ -10,8 +10,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.Define;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.sqlobject.stringtemplate.UseStringTemplate3StatementLocator;
 import org.springframework.stereotype.Repository;
-
-import com.wossha.clothing.commands.createClothe.model.Clothe;
+import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 
 @Repository
@@ -35,6 +34,19 @@ public abstract  class ClothesDao {
 	@RegisterMapper(ClothesMapperJdbi.class)
 	@SqlQuery("SELECT COUNT(0) FROM TWSS_CLOTHES WHERE USERNAME = :username")
     public abstract Integer countFindAllClothesByUser(@Bind("username") String username);
+	
+	@SqlQuery("SELECT TYPE FROM TWSS_CLOTHES WHERE USERNAME = :username GROUP BY TYPE ORDER BY TYPE")
+    public abstract List<String> getTypesByUser(@Bind("username") String username);
+	
+	@SqlQuery("SELECT CATEGORY FROM TWSS_CLOTHES WHERE USERNAME = :username GROUP BY CATEGORY ORDER BY CATEGORY")
+    public abstract List<String> getCategoriesByUser(@Bind("username") String username);
+	
+	@SqlQuery("SELECT BRAND FROM TWSS_CLOTHES WHERE USERNAME = :username GROUP BY BRAND ORDER BY BRAND")
+    public abstract List<String> getBrandsByUser(@Bind("username") String username);
+	
+	@RegisterMapper(BaseColorMapperJdbi.class)
+	@SqlQuery("SELECT CO.ID, CO.NAME FROM TWSS_CLOTHES CL JOIN TWSS_BASE_COLORS CO ON CL.BASE_COLOR = CO.ID WHERE CL.USERNAME = :username GROUP BY CO.ID, CO.NAME ORDER BY CO.NAME")
+    public abstract List<BaseColorDTO> getColorNamesByUser(@Bind("username") String username);
     
     //INSERTS--------------------------------------------------------------------------------------------------------------------------------------
     

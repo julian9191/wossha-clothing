@@ -14,6 +14,7 @@ import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
 import com.wossha.clothing.dto.ColorDTO;
+import com.wossha.clothing.dto.SearchCriteriaParamsDTO;
 import com.wossha.clothing.infrastructure.dao.basecolor.BaseColorDao;
 import com.wossha.clothing.infrastructure.dao.brand.BrandDao;
 import com.wossha.clothing.infrastructure.dao.clothe.ClothesDao;
@@ -115,6 +116,18 @@ public class ClotheRepository implements Repository<Clothe> {
 		}
 
     	return colorsMap; 
+	}
+	
+	public SearchCriteriaParamsDTO getSearchCriteriaParamsByUser(String username) {
+		SearchCriteriaParamsDTO searchCriteriaParams = new SearchCriteriaParamsDTO();
+		
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		searchCriteriaParams.setTypes(clothesDao.getTypesByUser(username));
+		searchCriteriaParams.setCategories(clothesDao.getCategoriesByUser(username));
+		searchCriteriaParams.setBrands(clothesDao.getBrandsByUser(username));
+		searchCriteriaParams.setColors(clothesDao.getColorNamesByUser(username));
+		
+		return searchCriteriaParams;
 	}
 	
 	public void updateClothe(ClotheDTO clothe) {

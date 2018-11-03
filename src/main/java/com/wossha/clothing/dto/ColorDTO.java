@@ -11,6 +11,11 @@ public class ColorDTO {
 		this.baseColor = baseColor;
 	}
 	
+	public ColorDTO(Integer id, Integer baseColor) {
+		this.id = id;
+		this.baseColor = baseColor;
+	}
+	
 	public ColorDTO() {}
 
 	public Integer getId() {
