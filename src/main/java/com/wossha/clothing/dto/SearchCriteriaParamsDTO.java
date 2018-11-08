@@ -4,13 +4,13 @@ import java.util.List;
 
 public class SearchCriteriaParamsDTO {
 	
-	private List<String> types;
-	private List<String> categories;
-	private List<String> brands;
-	private List<BaseColorDTO> colors;
+	private List<MultiselectItem> types;
+	private List<MultiselectItem> categories;
+	private List<MultiselectItem> brands;
+	private List<MultiselectItem> colors;
 	
-	public SearchCriteriaParamsDTO(List<String> types, List<String> categories, List<String> brands,
-			List<BaseColorDTO> colors) {
+	public SearchCriteriaParamsDTO(List<MultiselectItem> types, List<MultiselectItem> categories, List<MultiselectItem> brands,
+			List<MultiselectItem> colors) {
 		this.types = types;
 		this.categories = categories;
 		this.brands = brands;
@@ -20,35 +20,35 @@ public class SearchCriteriaParamsDTO {
 	public SearchCriteriaParamsDTO() {}
 
 	
-	public List<String> getTypes() {
+	public List<MultiselectItem> getTypes() {
 		return types;
 	}
 
-	public void setTypes(List<String> types) {
+	public void setTypes(List<MultiselectItem> types) {
 		this.types = types;
 	}
 
-	public List<String> getCategories() {
+	public List<MultiselectItem> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(List<String> categories) {
+	public void setCategories(List<MultiselectItem> categories) {
 		this.categories = categories;
 	}
 
-	public List<String> getBrands() {
+	public List<MultiselectItem> getBrands() {
 		return brands;
 	}
 
-	public void setBrands(List<String> brands) {
+	public void setBrands(List<MultiselectItem> brands) {
 		this.brands = brands;
 	}
 
-	public List<BaseColorDTO> getColors() {
+	public List<MultiselectItem> getColors() {
 		return colors;
 	}
 
-	public void setColors(List<BaseColorDTO> colors) {
+	public void setColors(List<MultiselectItem> colors) {
 		this.colors = colors;
 	}
 	
