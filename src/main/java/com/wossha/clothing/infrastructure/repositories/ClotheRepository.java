@@ -16,6 +16,7 @@ import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
 import com.wossha.clothing.dto.ColorDTO;
 import com.wossha.clothing.dto.MultiselectItem;
+import com.wossha.clothing.dto.SearchCriteriaDTO;
 import com.wossha.clothing.dto.SearchCriteriaParamsDTO;
 import com.wossha.clothing.infrastructure.dao.basecolor.BaseColorDao;
 import com.wossha.clothing.infrastructure.dao.brand.BrandDao;
@@ -63,6 +64,19 @@ public class ClotheRepository implements Repository<Clothe> {
 		resultMap.put("result", clothes);
 		return resultMap;
 	}
+	
+	public Map<String, Object> searchClothesByUser(String username, SearchCriteriaDTO searchCriteria, int init, int limit) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		Integer count = clothesDao.countFindAllClothesByUser(username);
+		List<ClotheDTO> clothes = clothesDao.findClothesByUser(username, init, limit, "name");
+
+		Pagination pagination = new Pagination(count, init, limit);
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("pagination", pagination);
+		resultMap.put("result", clothes);
+		return resultMap;
+	}
+	
 
 	public ClotheDTO findClotheByUuid(String username, String uuid) {
 		clothesDao = dbi.onDemand(ClothesDao.class);
