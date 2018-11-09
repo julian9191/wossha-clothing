@@ -68,7 +68,17 @@ public class ClotheRepository implements Repository<Clothe> {
 	public Map<String, Object> searchClothesByUser(String username, SearchCriteriaDTO searchCriteria, int init, int limit) {
 		clothesDao = dbi.onDemand(ClothesDao.class);
 		Integer count = clothesDao.countFindAllClothesByUser(username);
-		List<ClotheDTO> clothes = clothesDao.findClothesByUser(username, init, limit, "name");
+		
+		List<String> types = searchCriteria.getTypes().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		List<String> categories = searchCriteria.getCategories().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		List<String> brands = searchCriteria.getBrands().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		List<String> colors = searchCriteria.getColors().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+
+		List<ClotheDTO> clothes = clothesDao.searchClothesByUser(dbi, username, types, categories, brands, colors, searchCriteria.getHowLike(), init, limit);
 
 		Pagination pagination = new Pagination(count, init, limit);
 		Map<String, Object> resultMap = new HashMap<>();
