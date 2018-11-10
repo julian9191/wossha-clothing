@@ -26,8 +26,7 @@ public class BaseDao<t> {
 			return null;
 		}
 		
-		for (Map.Entry<String, List<String>> entry : map.entrySet())
-		{
+		for (Map.Entry<String, List<String>> entry : map.entrySet()){
 			result = StringUtils.replace(result, "<"+entry.getKey()+">", getBingIdentifier(entry.getKey(), entry.getValue().size()));
 		}
 		

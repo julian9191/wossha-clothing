@@ -22,7 +22,6 @@ import org.springframework.stereotype.Repository;
 import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.infrastructure.dao.BaseDao;
-import com.wossha.msbase.utils.SqlQueryUtils;
 
 import org.skife.jdbi.v2.unstable.BindIn;
 
@@ -93,6 +92,40 @@ public abstract class ClothesDao {
 		
 		q = baseDao.addInClauseBind(q, typesBindMap);
 		List<ClotheDTO> output = (List<ClotheDTO>) q.list();
+          
+        return output;
+    }
+	
+	public Integer countSearchClothesByUser(IDBI dbi, String username, List<String> types, List<String> categories,
+			List<String> brands, List<String> colors, Integer howLike) {
+		
+		BaseDao<Integer> baseDao = new BaseDao<>();
+		String query = "SELECT COUNT(0) FROM TWSS_CLOTHES ";
+		query += "WHERE USERNAME = :username ";
+		query += !types.isEmpty() ? "AND TYPE IN (<types>) " : " ";
+		query += !categories.isEmpty() ? "AND CATEGORY IN (<categories>) " : " ";
+		query += !brands.isEmpty() ? "AND BRAND IN (<brands>) " : " ";
+		query += !colors.isEmpty() ? "AND BASE_COLOR IN (<colors>) " : " ";
+		query += howLike != null ? "AND HOW_LIKE = :howLike " : " ";
+		query += "ORDER BY NAME";
+		
+		Map<String, List<String>> typesBindMap = new HashMap<>();
+		typesBindMap.put("types", types);
+		typesBindMap.put("categories", categories);
+		typesBindMap.put("brands", brands);
+		typesBindMap.put("colors", colors);
+		query = baseDao.generateBingIdentifier(query, typesBindMap);
+		
+		
+		Handle h = dbi.open();
+		@SuppressWarnings("unchecked")
+		Query<Integer> q = h.createQuery(query)
+				.mapTo(Integer.class)
+				.bind("username", username)
+				.bind("howLike", howLike);
+		
+		q = baseDao.addInClauseBind(q, typesBindMap);
+		Integer output =  q.first();
           
         return output;
     }
