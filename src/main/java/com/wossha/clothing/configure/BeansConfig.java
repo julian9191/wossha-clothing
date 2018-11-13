@@ -4,12 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.wossha.clothing.commands.CommandSerializers;
-import com.wossha.clothing.commands.createClothe.CreateClotheCommand;
-import com.wossha.clothing.commands.createClothe.CreateClotheSerializer;
-import com.wossha.clothing.commands.editClothe.EditClotheCommand;
-import com.wossha.clothing.commands.editClothe.EditClotheSerializer;
-import com.wossha.clothing.commands.removeClothe.RemoveClotheCommand;
-import com.wossha.clothing.commands.removeClothe.RemoveClotheSerializer;
+import com.wossha.clothing.commands.calendar.addToCalendar.AddToCalendarCommand;
+import com.wossha.clothing.commands.calendar.addToCalendar.AddToCalendarSerializer;
+import com.wossha.clothing.commands.clothing.createClothe.CreateClotheCommand;
+import com.wossha.clothing.commands.clothing.createClothe.CreateClotheSerializer;
+import com.wossha.clothing.commands.clothing.editClothe.EditClotheCommand;
+import com.wossha.clothing.commands.clothing.editClothe.EditClotheSerializer;
+import com.wossha.clothing.commands.clothing.removeClothe.RemoveClotheCommand;
+import com.wossha.clothing.commands.clothing.removeClothe.RemoveClotheSerializer;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import com.wossha.clothing.infrastructure.jms.EventSerializers;
 
@@ -17,7 +19,7 @@ import com.wossha.clothing.infrastructure.jms.EventSerializers;
 public class BeansConfig {
 	
 	@Bean
-	public ClotheRepository userRpository() {
+	public ClotheRepository clotheRpository() {
 			return new ClotheRepository();
 	}
 
@@ -37,6 +39,11 @@ public class BeansConfig {
 		return new RemoveClotheCommand();
 	}
 	
+	@Bean
+	public AddToCalendarCommand addToCalendarCommand() {
+		return new AddToCalendarCommand();
+	}
+	
 	
 	//serializers--------------------------------------------------
 	@Bean
@@ -54,6 +61,11 @@ public class BeansConfig {
 		return new RemoveClotheSerializer();
 	}
 	
+	@Bean
+	public AddToCalendarSerializer addToCalendarSerializer() {
+		return new AddToCalendarSerializer();
+	}
+	
 	
 	
 	//--------------------------------------------------------------
@@ -64,6 +76,7 @@ public class BeansConfig {
 		cs.setCreateClotheSerializerr(createClotheSerializer());
 		cs.setEditClotheSerializer(editClotheSerializer());
 		cs.setRemoveClotheSerializer(removeClotheSerializer());
+		cs.setAddToCalendarSerializer(addToCalendarSerializer());
 		cs.initMapper();
 		return cs;
 	}

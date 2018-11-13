@@ -1,4 +1,4 @@
-package com.wossha.clothing.commands.editClothe;
+package com.wossha.clothing.commands.calendar.addToCalendar;
 
 import java.io.IOException;
 
@@ -6,21 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wossha.clothing.commands.editClothe.model.EditClothe;
+import com.wossha.clothing.commands.calendar.addToCalendar.model.AddToCalendar;
 import com.wossha.msbase.commands.ICommand;
 import com.wossha.msbase.commands.ICommandSerializer;
 
 @Component
-public class EditClotheSerializer implements ICommandSerializer {
+public class AddToCalendarSerializer implements ICommandSerializer {
 	
 	private ObjectMapper m = new ObjectMapper();
 	
 	@Autowired
-	private EditClotheCommand command;
+	private AddToCalendarCommand command;
 	
 	@Override
-	public ICommand<EditClothe> deserialize(String json) throws IOException {
-		EditClothe dto = m.readValue(json, EditClothe.class);
+	public ICommand<AddToCalendar> deserialize(String json) throws IOException {
+		AddToCalendar dto = m.readValue(json, AddToCalendar.class);
         command.setData(dto);
         return command;
 	}

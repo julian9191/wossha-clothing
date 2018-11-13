@@ -4,7 +4,7 @@ import org.dozer.DozerBeanMapper;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 
-import com.wossha.clothing.commands.createClothe.model.Clothe;
+import com.wossha.clothing.commands.clothing.createClothe.model.Clothe;
 import com.wossha.clothing.dto.ClotheDTO;
 
 import java.sql.Timestamp;

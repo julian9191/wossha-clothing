@@ -1,4 +1,4 @@
-package com.wossha.clothing.commands.removeClothe.model;
+package com.wossha.clothing.commands.clothing.removeClothe.model;
 
 public class RemoveClothe {
 

@@ -1,10 +1,10 @@
-package com.wossha.clothing.commands.removeClothe;
+package com.wossha.clothing.commands.clothing.removeClothe;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.wossha.clothing.WosshaClothingApplication;
-import com.wossha.clothing.commands.removeClothe.model.RemoveClothe;
+import com.wossha.clothing.commands.clothing.removeClothe.model.RemoveClothe;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.infrastructure.mapper.MapperDozer;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;

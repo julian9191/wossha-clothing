@@ -1,4 +1,4 @@
-package com.wossha.clothing.commands.createClothe.model;
+package com.wossha.clothing.commands.clothing.createClothe.model;
 
 import java.sql.Timestamp;
 

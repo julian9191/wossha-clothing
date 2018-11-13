@@ -1,9 +1,9 @@
-package com.wossha.clothing.commands.createClothe;
+package com.wossha.clothing.commands.clothing.createClothe;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.wossha.clothing.WosshaClothingApplication;
-import com.wossha.clothing.commands.createClothe.model.CreateClothe;
+import com.wossha.clothing.commands.clothing.createClothe.model.CreateClothe;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.infrastructure.mapper.MapperDozer;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;

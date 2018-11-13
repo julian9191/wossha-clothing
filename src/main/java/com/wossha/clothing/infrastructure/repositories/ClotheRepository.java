@@ -1,5 +1,8 @@
 package com.wossha.clothing.infrastructure.repositories;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +11,7 @@ import java.util.stream.Collectors;
 import org.skife.jdbi.v2.IDBI;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wossha.clothing.commands.createClothe.model.Clothe;
+import com.wossha.clothing.commands.clothing.createClothe.model.Clothe;
 import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClotheDTO;
@@ -144,29 +147,7 @@ public class ClotheRepository implements Repository<Clothe> {
 
 		return colorsMap;
 	}
-
-	public SearchCriteriaParamsDTO getSearchCriteriaParamsByUser(String username) {
-		SearchCriteriaParamsDTO searchCriteriaParams = new SearchCriteriaParamsDTO();
-
-		clothesDao = dbi.onDemand(ClothesDao.class);
-
-		List<MultiselectItem> types = clothesDao.getTypesByUser(username).stream().map(x -> new MultiselectItem(x, x))
-				.collect(Collectors.toList());
-		List<MultiselectItem> Categories = clothesDao.getCategoriesByUser(username).stream().map(x -> new MultiselectItem(x, x))
-				.collect(Collectors.toList());
-		List<MultiselectItem> brands = clothesDao.getBrandsByUser(username).stream().map(x -> new MultiselectItem(x, x))
-				.collect(Collectors.toList());
-		List<MultiselectItem> colors = clothesDao.getColorNamesByUser(username).stream().map(x -> new MultiselectItem(x.getId()+"", x.getName()))
-				.collect(Collectors.toList());
-
-		searchCriteriaParams.setTypes(types);
-		searchCriteriaParams.setCategories(Categories);
-		searchCriteriaParams.setBrands(brands);
-		searchCriteriaParams.setColors(colors);
-
-		return searchCriteriaParams;
-	}
-
+	
 	public void updateClothe(ClotheDTO clothe) {
 		clothesDao = dbi.onDemand(ClothesDao.class);
 		if (clothe.getPicture() == null) {
@@ -191,5 +172,42 @@ public class ClotheRepository implements Repository<Clothe> {
 	public void remove(Clothe clothe) {
 
 	}
+	
+	
+	//CALENDAR-----------------------------------------------------------------------------------------------------------------
+
+	public SearchCriteriaParamsDTO getSearchCriteriaParamsByUser(String username) {
+		SearchCriteriaParamsDTO searchCriteriaParams = new SearchCriteriaParamsDTO();
+
+		clothesDao = dbi.onDemand(ClothesDao.class);
+
+		List<MultiselectItem> types = clothesDao.getTypesByUser(username).stream().map(x -> new MultiselectItem(x, x))
+				.collect(Collectors.toList());
+		List<MultiselectItem> Categories = clothesDao.getCategoriesByUser(username).stream().map(x -> new MultiselectItem(x, x))
+				.collect(Collectors.toList());
+		List<MultiselectItem> brands = clothesDao.getBrandsByUser(username).stream().map(x -> new MultiselectItem(x, x))
+				.collect(Collectors.toList());
+		List<MultiselectItem> colors = clothesDao.getColorNamesByUser(username).stream().map(x -> new MultiselectItem(x.getId()+"", x.getName()))
+				.collect(Collectors.toList());
+
+		searchCriteriaParams.setTypes(types);
+		searchCriteriaParams.setCategories(Categories);
+		searchCriteriaParams.setBrands(brands);
+		searchCriteriaParams.setColors(colors);
+
+		return searchCriteriaParams;
+	}
+	
+	public ClotheDTO findClotheByDate(String uuid, Timestamp day) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		return clothesDao.findClotheByDate(uuid, day);
+	}
+
+	public void addToCalendar(String username, Timestamp day, Integer idClothe, String uuidClothe) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		clothesDao.addToCalendar(username, day, idClothe, uuidClothe);
+	}
+
+	
 
 }

@@ -1,15 +1,13 @@
 package com.wossha.clothing.infrastructure.dao.clothe;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 import org.skife.jdbi.v2.IDBI;
 import org.skife.jdbi.v2.Query;
-//import org.apache.commons.text.StringEscapeUtils;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.BindBean;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
@@ -17,13 +15,10 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Define;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.sqlobject.stringtemplate.UseStringTemplate3StatementLocator;
-import org.skife.jdbi.v2.tweak.HandleCallback;
 import org.springframework.stereotype.Repository;
 import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.infrastructure.dao.BaseDao;
-
-import org.skife.jdbi.v2.unstable.BindIn;
 
 @Repository
 @UseStringTemplate3StatementLocator
@@ -130,7 +125,10 @@ public abstract class ClothesDao {
         return output;
     }
 	
-
+	@RegisterMapper(ClothesMapperJdbi.class)
+	@SqlQuery("SELECT cl.* FROM TWSS_CALENDAR ca JOIN TWSS_CLOTHES cl ON ca.ID_CLOTHE = cl.ID WHERE ca.UUID_CLOTHE = :uuid AND TRUNC(ca.DAY) = TRUNC(:day) ")
+	public abstract ClotheDTO findClotheByDate(@Bind("uuid") String uuid, @Bind("day") Date day);
+	
 	
 
 	// INSERTS--------------------------------------------------------------------------------------------------------------------------------------
@@ -138,6 +136,14 @@ public abstract class ClothesDao {
 	@RegisterMapper(ClothesMapperJdbi.class)
 	@SqlUpdate("Insert into TWSS_CLOTHES (UUID,USERNAME,NAME,DESCRIPTION,TYPE,CATEGORY,PURCHASE_DATE,HOW_LIKE,BRAND,COLOR_CODE,BASE_COLOR,PICTURE) values (:clothe.uuid, :clothe.username, :clothe.name, :clothe.description, :clothe.type, :clothe.category, :clothe.purchaseDate, :clothe.howLike, :clothe.brand, :clothe.colorCode, :clothe.baseColor, :clothe.picture)")
 	public abstract void add(@BindBean("clothe") ClotheDTO clothe);
+	
+	@RegisterMapper(ClothesMapperJdbi.class)
+	@SqlUpdate("Insert into TWSS_CALENDAR (ID_CLOTHE,UUID_CLOTHE,USERNAME,DAY) values (:idClothe, :uuidClothe, :username, :day)")
+	public abstract void addToCalendar(@Bind("username") String username, @Bind("day") Timestamp day, @Bind("idClothe") Integer idClothe, @Bind("uuidClothe") String uuidClothe);
+	
+	@RegisterMapper(ClothesMapperJdbi.class)
+	@SqlUpdate("Insert into TWSS_CALENDAR_DESCRIPTION (USERNAME,DAY,DESCRIPTION) values (:username, :day, :description)")
+	public abstract void addDescriptionToCalendar(@Bind("username") String username, @Bind("day") Timestamp day, @Bind("description") String description);
 
 	// UPDATES----------------------------------------------------------------------------------------------------------------------------------------
 

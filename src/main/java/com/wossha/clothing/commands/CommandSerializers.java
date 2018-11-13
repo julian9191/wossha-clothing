@@ -2,13 +2,11 @@ package com.wossha.clothing.commands;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.wossha.clothing.commands.createClothe.CreateClotheSerializer;
-import com.wossha.clothing.commands.editClothe.EditClotheSerializer;
-import com.wossha.clothing.commands.removeClothe.RemoveClotheSerializer;
+import com.wossha.clothing.commands.calendar.addToCalendar.AddToCalendarSerializer;
+import com.wossha.clothing.commands.clothing.createClothe.CreateClotheSerializer;
+import com.wossha.clothing.commands.clothing.editClothe.EditClotheSerializer;
+import com.wossha.clothing.commands.clothing.removeClothe.RemoveClotheSerializer;
 import com.wossha.msbase.commands.ICommandSerializer;
 
 @Service
@@ -20,11 +18,13 @@ public class CommandSerializers {
     private CreateClotheSerializer createClotheSerializer;
     private EditClotheSerializer editClotheSerializer;
     private RemoveClotheSerializer removeClotheSerializer;
+    private AddToCalendarSerializer addToCalendarSerializer;
 
 	public void initMapper() {
         processors.put("CreateClothe", createClotheSerializer);
         processors.put("EditClothe", editClotheSerializer);
         processors.put("RemoveClothe", removeClotheSerializer);
+        processors.put("AddToCalendar", addToCalendarSerializer);
     }
 
     public ICommandSerializer get(String commandName) {
@@ -43,4 +43,9 @@ public class CommandSerializers {
 		this.removeClotheSerializer = removeClotheSerializer;
 		
 	}
+
+	public void setAddToCalendarSerializer(AddToCalendarSerializer addToCalendarSerializer) {
+		this.addToCalendarSerializer = addToCalendarSerializer;
+	}
+	
 }

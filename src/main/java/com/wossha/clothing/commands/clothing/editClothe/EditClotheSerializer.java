@@ -1,4 +1,4 @@
-package com.wossha.clothing.commands.removeClothe;
+package com.wossha.clothing.commands.clothing.editClothe;
 
 import java.io.IOException;
 
@@ -6,22 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wossha.clothing.commands.editClothe.model.EditClothe;
-import com.wossha.clothing.commands.removeClothe.model.RemoveClothe;
+import com.wossha.clothing.commands.clothing.editClothe.model.EditClothe;
 import com.wossha.msbase.commands.ICommand;
 import com.wossha.msbase.commands.ICommandSerializer;
 
 @Component
-public class RemoveClotheSerializer implements ICommandSerializer {
+public class EditClotheSerializer implements ICommandSerializer {
 	
 	private ObjectMapper m = new ObjectMapper();
 	
 	@Autowired
-	private RemoveClotheCommand command;
+	private EditClotheCommand command;
 	
 	@Override
-	public ICommand<RemoveClothe> deserialize(String json) throws IOException {
-		RemoveClothe dto = m.readValue(json, RemoveClothe.class);
+	public ICommand<EditClothe> deserialize(String json) throws IOException {
+		EditClothe dto = m.readValue(json, EditClothe.class);
         command.setData(dto);
         return command;
 	}

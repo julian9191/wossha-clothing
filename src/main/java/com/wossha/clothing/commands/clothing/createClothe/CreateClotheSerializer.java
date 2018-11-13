@@ -1,4 +1,4 @@
-package com.wossha.clothing.commands.createClothe;
+package com.wossha.clothing.commands.clothing.createClothe;
 
 import java.io.IOException;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wossha.clothing.commands.createClothe.model.CreateClothe;
+import com.wossha.clothing.commands.clothing.createClothe.model.CreateClothe;
 import com.wossha.msbase.commands.ICommand;
 import com.wossha.msbase.commands.ICommandSerializer;
 

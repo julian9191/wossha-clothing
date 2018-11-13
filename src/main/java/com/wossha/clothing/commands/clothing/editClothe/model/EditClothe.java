@@ -1,8 +1,9 @@
-package com.wossha.clothing.commands.createClothe.model;
+package com.wossha.clothing.commands.clothing.editClothe.model;
 
+import com.wossha.clothing.commands.clothing.createClothe.model.Clothe;
 import com.wossha.msbase.commands.CommandModel;
 
-public class CreateClothe extends CommandModel{
+public class EditClothe extends CommandModel{
     private Clothe clothe;
     
 	public Clothe getClothe() {
