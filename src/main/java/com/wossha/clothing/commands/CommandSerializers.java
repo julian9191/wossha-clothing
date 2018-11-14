@@ -3,6 +3,8 @@ package com.wossha.clothing.commands;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Service;
+
+import com.wossha.clothing.commands.calendar.AddDayDescription.AddDayDescriptionSerializer;
 import com.wossha.clothing.commands.calendar.addToCalendar.AddToCalendarSerializer;
 import com.wossha.clothing.commands.clothing.createClothe.CreateClotheSerializer;
 import com.wossha.clothing.commands.clothing.editClothe.EditClotheSerializer;
@@ -19,12 +21,14 @@ public class CommandSerializers {
     private EditClotheSerializer editClotheSerializer;
     private RemoveClotheSerializer removeClotheSerializer;
     private AddToCalendarSerializer addToCalendarSerializer;
+    private AddDayDescriptionSerializer addDayDescriptionSerializer;
 
 	public void initMapper() {
         processors.put("CreateClothe", createClotheSerializer);
         processors.put("EditClothe", editClotheSerializer);
         processors.put("RemoveClothe", removeClotheSerializer);
         processors.put("AddToCalendar", addToCalendarSerializer);
+        processors.put("AddDayDescription", addDayDescriptionSerializer);
     }
 
     public ICommandSerializer get(String commandName) {
@@ -47,5 +51,10 @@ public class CommandSerializers {
 	public void setAddToCalendarSerializer(AddToCalendarSerializer addToCalendarSerializer) {
 		this.addToCalendarSerializer = addToCalendarSerializer;
 	}
+
+	public void setAddDayDescription(AddDayDescriptionSerializer addDayDescriptionSerializer) {
+		this.addDayDescriptionSerializer = addDayDescriptionSerializer;
+	}
+	
 	
 }

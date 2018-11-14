@@ -18,6 +18,7 @@ import com.wossha.clothing.dto.SearchCriteriaDTO;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.security.core.Authentication;
@@ -55,6 +56,18 @@ public class CalendarController extends ControllerWrapper {
 
 		List<ClotheDTO> c = repo.getDayClothing(username, date);
 		return c;
+	}
+	
+	@GetMapping(value = "/day-description/{longDate}")
+	public @ResponseBody Map<String, Object> getDayDescription(@PathVariable Long longDate) throws BusinessException {
+		Date date = new Date(longDate);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getPrincipal().toString();
+
+		String c = repo.getDayDescription(username, date);
+		Map<String, Object> result = new HashMap<>();
+		result.put("description", c);
+		return result;
 	}
 
 }

@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.wossha.clothing.commands.CommandSerializers;
+import com.wossha.clothing.commands.calendar.AddDayDescription.AddDayDescriptionCommand;
+import com.wossha.clothing.commands.calendar.AddDayDescription.AddDayDescriptionSerializer;
 import com.wossha.clothing.commands.calendar.addToCalendar.AddToCalendarCommand;
 import com.wossha.clothing.commands.calendar.addToCalendar.AddToCalendarSerializer;
 import com.wossha.clothing.commands.clothing.createClothe.CreateClotheCommand;
@@ -44,6 +46,10 @@ public class BeansConfig {
 		return new AddToCalendarCommand();
 	}
 	
+	@Bean
+	public AddDayDescriptionCommand addDayDescriptionCommand() {
+		return new AddDayDescriptionCommand();
+	}
 	
 	//serializers--------------------------------------------------
 	@Bean
@@ -66,6 +72,10 @@ public class BeansConfig {
 		return new AddToCalendarSerializer();
 	}
 	
+	@Bean
+	public AddDayDescriptionSerializer addDayDescriptionSerializer() {
+		return new AddDayDescriptionSerializer();
+	}
 	
 	
 	//--------------------------------------------------------------
@@ -77,6 +87,7 @@ public class BeansConfig {
 		cs.setEditClotheSerializer(editClotheSerializer());
 		cs.setRemoveClotheSerializer(removeClotheSerializer());
 		cs.setAddToCalendarSerializer(addToCalendarSerializer());
+		cs.setAddDayDescription(addDayDescriptionSerializer());
 		cs.initMapper();
 		return cs;
 	}

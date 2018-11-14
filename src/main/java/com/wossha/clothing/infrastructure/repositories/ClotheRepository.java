@@ -213,6 +213,21 @@ public class ClotheRepository implements Repository<Clothe> {
 		return clothesDao.getDayClothing(username, date);
 	}
 
+	public String getDayDescription(String username, Date date) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		return clothesDao.getDayDescription(username, date);
+	}
+
+	public void addDayDescription(String username, Timestamp day, String description) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		clothesDao.addDayDescription(username, day, description);
+	}
+
+	public void editDayDescription(String username, Timestamp day, String description) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		clothesDao.editDayDescription(username, new Date(day.getTime()), description);
+	}
+
 	
 
 }

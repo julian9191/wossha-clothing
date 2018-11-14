@@ -133,6 +133,11 @@ public abstract class ClothesDao {
 	@SqlQuery("SELECT cl.* FROM TWSS_CALENDAR ca JOIN TWSS_CLOTHES cl ON ca.ID_CLOTHE = cl.ID WHERE cl.USERNAME = :username AND TRUNC(ca.DAY) = TRUNC(:date)")
 	public abstract List<ClotheDTO> getDayClothing(@Bind("username") String username, @Bind("date") Date date);
 	
+	@SqlQuery("SELECT DESCRIPTION FROM TWSS_CALENDAR_DESCRIPTION WHERE USERNAME = :username AND TRUNC(DAY) = TRUNC(:date)")
+	public abstract String getDayDescription(@Bind("username") String username, @Bind("date") Date date);
+	
+	
+	
 
 	// INSERTS--------------------------------------------------------------------------------------------------------------------------------------
 
@@ -142,11 +147,11 @@ public abstract class ClothesDao {
 	
 	@RegisterMapper(ClothesMapperJdbi.class)
 	@SqlUpdate("Insert into TWSS_CALENDAR (ID_CLOTHE,UUID_CLOTHE,USERNAME,DAY) values (:idClothe, :uuidClothe, :username, :day)")
-	public abstract void addToCalendar(@Bind("username") String username, @Bind("day") Timestamp day, @Bind("idClothe") Integer idClothe, @Bind("uuidClothe") String uuidClothe);
+	public abstract void addToCalendar(@Bind("username") String username, @Bind("day") Date day, @Bind("idClothe") Integer idClothe, @Bind("uuidClothe") String uuidClothe);
 	
 	@RegisterMapper(ClothesMapperJdbi.class)
 	@SqlUpdate("Insert into TWSS_CALENDAR_DESCRIPTION (USERNAME,DAY,DESCRIPTION) values (:username, :day, :description)")
-	public abstract void addDescriptionToCalendar(@Bind("username") String username, @Bind("day") Timestamp day, @Bind("description") String description);
+	public abstract void addDayDescription(@Bind("username") String username, @Bind("day") Date day, @Bind("description") String description);
 
 	// UPDATES----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -157,6 +162,10 @@ public abstract class ClothesDao {
 	@RegisterMapper(ClothesMapperJdbi.class)
 	@SqlUpdate("UPDATE TWSS_CLOTHES SET NAME = :clothe.name, DESCRIPTION = :clothe.description, TYPE = :clothe.type, CATEGORY = :clothe.category, PURCHASE_DATE = :clothe.purchaseDate, HOW_LIKE = :clothe.howLike, BRAND = :clothe.brand, COLOR_CODE = :clothe.colorCode, BASE_COLOR = :clothe.baseColor, MODIFIED=SYSDATE WHERE UUID=:clothe.uuid")
 	public abstract void updateWithoutPicture(@BindBean("clothe") ClotheDTO clothe);
+	
+	@RegisterMapper(ClothesMapperJdbi.class)
+	@SqlUpdate("UPDATE TWSS_CALENDAR_DESCRIPTION SET DESCRIPTION = :description, MODIFIED=SYSDATE WHERE USERNAME = :username AND TRUNC(DAY) = TRUNC(:day)")
+	public abstract void editDayDescription(@Bind("username") String username, @Bind("day") Date day, @Bind("description") String description);
 
 	// REMOVES----------------------------------------------------------------------------------------------------------------------------------------
 	@RegisterMapper(ClothesMapperJdbi.class)
