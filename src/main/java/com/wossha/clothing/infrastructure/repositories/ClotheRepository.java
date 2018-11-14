@@ -228,6 +228,11 @@ public class ClotheRepository implements Repository<Clothe> {
 		clothesDao.editDayDescription(username, new Date(day.getTime()), description);
 	}
 
+	public void removeClotheFromDay(String username, Timestamp day, String uuidClothe) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		clothesDao.removeClotheFromDay(username, new Date(day.getTime()), uuidClothe);
+	}
+
 	
 
 }

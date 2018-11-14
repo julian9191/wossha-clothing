@@ -171,6 +171,10 @@ public abstract class ClothesDao {
 	@RegisterMapper(ClothesMapperJdbi.class)
 	@SqlUpdate("DELETE FROM TWSS_CLOTHES WHERE UUID=:uuid")
 	public abstract void remove(@Bind("uuid") String uuid);
+	
+	@RegisterMapper(ClothesMapperJdbi.class)
+	@SqlUpdate("DELETE FROM TWSS_CALENDAR WHERE USERNAME = :username AND TRUNC(DAY) = TRUNC(:day) AND UUID_CLOTHE= :uuidClothe")
+	public abstract void removeClotheFromDay(@Bind("username") String username, @Bind("day") Date day, @Bind("uuidClothe") String uuidClothe);
 
 	public abstract void close();
 

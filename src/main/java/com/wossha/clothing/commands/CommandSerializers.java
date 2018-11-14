@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.wossha.clothing.commands.calendar.AddDayDescription.AddDayDescriptionSerializer;
 import com.wossha.clothing.commands.calendar.addToCalendar.AddToCalendarSerializer;
+import com.wossha.clothing.commands.calendar.removeClotheFromDay.RemoveClotheFromDaySerializer;
 import com.wossha.clothing.commands.clothing.createClothe.CreateClotheSerializer;
 import com.wossha.clothing.commands.clothing.editClothe.EditClotheSerializer;
 import com.wossha.clothing.commands.clothing.removeClothe.RemoveClotheSerializer;
@@ -22,6 +23,7 @@ public class CommandSerializers {
     private RemoveClotheSerializer removeClotheSerializer;
     private AddToCalendarSerializer addToCalendarSerializer;
     private AddDayDescriptionSerializer addDayDescriptionSerializer;
+    private RemoveClotheFromDaySerializer removeClotheFromDaySerializer;
 
 	public void initMapper() {
         processors.put("CreateClothe", createClotheSerializer);
@@ -29,6 +31,7 @@ public class CommandSerializers {
         processors.put("RemoveClothe", removeClotheSerializer);
         processors.put("AddToCalendar", addToCalendarSerializer);
         processors.put("AddDayDescription", addDayDescriptionSerializer);
+        processors.put("RemoveClotheFromDay", removeClotheFromDaySerializer);
     }
 
     public ICommandSerializer get(String commandName) {
@@ -55,6 +58,9 @@ public class CommandSerializers {
 	public void setAddDayDescription(AddDayDescriptionSerializer addDayDescriptionSerializer) {
 		this.addDayDescriptionSerializer = addDayDescriptionSerializer;
 	}
-	
+
+	public void setRemoveClotheFromDaySerializer(RemoveClotheFromDaySerializer removeClotheFromDaySerializer) {
+		this.removeClotheFromDaySerializer = removeClotheFromDaySerializer;
+	}
 	
 }

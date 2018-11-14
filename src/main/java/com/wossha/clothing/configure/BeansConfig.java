@@ -8,6 +8,8 @@ import com.wossha.clothing.commands.calendar.AddDayDescription.AddDayDescription
 import com.wossha.clothing.commands.calendar.AddDayDescription.AddDayDescriptionSerializer;
 import com.wossha.clothing.commands.calendar.addToCalendar.AddToCalendarCommand;
 import com.wossha.clothing.commands.calendar.addToCalendar.AddToCalendarSerializer;
+import com.wossha.clothing.commands.calendar.removeClotheFromDay.RemoveClotheFromDayCommand;
+import com.wossha.clothing.commands.calendar.removeClotheFromDay.RemoveClotheFromDaySerializer;
 import com.wossha.clothing.commands.clothing.createClothe.CreateClotheCommand;
 import com.wossha.clothing.commands.clothing.createClothe.CreateClotheSerializer;
 import com.wossha.clothing.commands.clothing.editClothe.EditClotheCommand;
@@ -51,6 +53,11 @@ public class BeansConfig {
 		return new AddDayDescriptionCommand();
 	}
 	
+	@Bean
+	public RemoveClotheFromDayCommand removeClotheFromDayCommand() {
+		return new RemoveClotheFromDayCommand();
+	}
+	
 	//serializers--------------------------------------------------
 	@Bean
 	public CreateClotheSerializer createClotheSerializer() {
@@ -77,6 +84,11 @@ public class BeansConfig {
 		return new AddDayDescriptionSerializer();
 	}
 	
+	@Bean
+	public RemoveClotheFromDaySerializer removeClotheFromDaySerializer() {
+		return new RemoveClotheFromDaySerializer();
+	}
+	
 	
 	//--------------------------------------------------------------
 	
@@ -88,6 +100,7 @@ public class BeansConfig {
 		cs.setRemoveClotheSerializer(removeClotheSerializer());
 		cs.setAddToCalendarSerializer(addToCalendarSerializer());
 		cs.setAddDayDescription(addDayDescriptionSerializer());
+		cs.setRemoveClotheFromDaySerializer(removeClotheFromDaySerializer());
 		cs.initMapper();
 		return cs;
 	}
