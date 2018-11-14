@@ -129,6 +129,9 @@ public abstract class ClothesDao {
 	@SqlQuery("SELECT cl.* FROM TWSS_CALENDAR ca JOIN TWSS_CLOTHES cl ON ca.ID_CLOTHE = cl.ID WHERE ca.UUID_CLOTHE = :uuid AND TRUNC(ca.DAY) = TRUNC(:day) ")
 	public abstract ClotheDTO findClotheByDate(@Bind("uuid") String uuid, @Bind("day") Date day);
 	
+	@RegisterMapper(ClothesMapperJdbi.class)
+	@SqlQuery("SELECT cl.* FROM TWSS_CALENDAR ca JOIN TWSS_CLOTHES cl ON ca.ID_CLOTHE = cl.ID WHERE cl.USERNAME = :username AND TRUNC(ca.DAY) = TRUNC(:date)")
+	public abstract List<ClotheDTO> getDayClothing(@Bind("username") String username, @Bind("date") Date date);
 	
 
 	// INSERTS--------------------------------------------------------------------------------------------------------------------------------------

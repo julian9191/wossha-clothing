@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.SearchCriteriaDTO;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
+
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,6 +44,16 @@ public class CalendarController extends ControllerWrapper {
 		String username = auth.getPrincipal().toString();
 
 		Map<String, Object> c = repo.searchClothesByUser(username, searchCriteria, init, limit);
+		return c;
+	}
+	
+	@GetMapping(value = "/day-clothing/{longDate}")
+	public @ResponseBody List<ClotheDTO> getDayClothing(@PathVariable Long longDate) throws BusinessException {
+		Date date = new Date(longDate);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getPrincipal().toString();
+
+		List<ClotheDTO> c = repo.getDayClothing(username, date);
 		return c;
 	}
 

@@ -208,6 +208,11 @@ public class ClotheRepository implements Repository<Clothe> {
 		clothesDao.addToCalendar(username, day, idClothe, uuidClothe);
 	}
 
+	public List<ClotheDTO> getDayClothing(String username, Date date) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		return clothesDao.getDayClothing(username, date);
+	}
+
 	
 
 }
