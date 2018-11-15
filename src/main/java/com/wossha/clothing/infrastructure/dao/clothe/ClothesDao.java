@@ -17,6 +17,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 import org.skife.jdbi.v2.sqlobject.stringtemplate.UseStringTemplate3StatementLocator;
 import org.springframework.stereotype.Repository;
 import com.wossha.clothing.dto.BaseColorDTO;
+import com.wossha.clothing.dto.CalendarClotheDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.infrastructure.dao.BaseDao;
 
@@ -136,7 +137,11 @@ public abstract class ClothesDao {
 	@SqlQuery("SELECT DESCRIPTION FROM TWSS_CALENDAR_DESCRIPTION WHERE USERNAME = :username AND TRUNC(DAY) = TRUNC(:date)")
 	public abstract String getDayDescription(@Bind("username") String username, @Bind("date") Date date);
 	
-	
+	@RegisterMapper(CalendarClotheMapperJdbi.class)
+	@SqlQuery("SELECT cl.PICTURE, cl.NAME, cl.COLOR_CODE, cl.DESCRIPTION, ca.DAY " + 
+			"FROM WSSCLOTHINGCXN1.TWSS_CALENDAR ca JOIN WSSCLOTHINGCXN1.TWSS_CLOTHES cl ON ca.ID_CLOTHE = cl.ID " + 
+			"WHERE cl.USERNAME = :username AND TRUNC(ca.DAY) BETWEEN TRUNC(:startDate) AND TRUNC(:endDate)")
+	public abstract List<CalendarClotheDTO> getEventsByView(@Bind("username") String username, @Bind("startDate") Date startDate, @Bind("endDate") Date endDate);
 	
 
 	// INSERTS--------------------------------------------------------------------------------------------------------------------------------------

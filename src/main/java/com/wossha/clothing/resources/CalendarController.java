@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wossha.clothing.dto.CalendarClotheDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.SearchCriteriaDTO;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
@@ -68,6 +69,17 @@ public class CalendarController extends ControllerWrapper {
 		Map<String, Object> result = new HashMap<>();
 		result.put("description", c);
 		return result;
+	}
+	
+	@GetMapping(value = "/view-events/{startLongDate}/{endLongDate}")
+	public @ResponseBody List<CalendarClotheDTO> getEventsByView(@PathVariable Long startLongDate, @PathVariable Long endLongDate) throws BusinessException {
+		Date startDate = new Date(startLongDate);
+		Date endDate = new Date(endLongDate);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getPrincipal().toString();
+
+		List<CalendarClotheDTO> c = repo.getEventsByView(username, startDate, endDate);
+		return c;
 	}
 
 }

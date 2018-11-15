@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.wossha.clothing.commands.clothing.createClothe.model.Clothe;
 import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.BrandDTO;
+import com.wossha.clothing.dto.CalendarClotheDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
@@ -231,6 +232,11 @@ public class ClotheRepository implements Repository<Clothe> {
 	public void removeClotheFromDay(String username, Timestamp day, String uuidClothe) {
 		clothesDao = dbi.onDemand(ClothesDao.class);
 		clothesDao.removeClotheFromDay(username, new Date(day.getTime()), uuidClothe);
+	}
+
+	public List<CalendarClotheDTO> getEventsByView(String username, Date startDate, Date endDate) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		return clothesDao.getEventsByView(username, startDate, endDate);
 	}
 
 	
