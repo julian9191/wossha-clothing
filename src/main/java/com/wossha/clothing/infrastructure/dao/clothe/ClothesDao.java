@@ -143,6 +143,41 @@ public abstract class ClothesDao {
 			"WHERE cl.USERNAME = :username AND TRUNC(ca.DAY) BETWEEN TRUNC(:startDate) AND TRUNC(:endDate)")
 	public abstract List<CalendarClotheDTO> getEventsByView(@Bind("username") String username, @Bind("startDate") Date startDate, @Bind("endDate") Date endDate);
 	
+	public ClotheDTO getOutfit(IDBI dbi, String username, String type, List<String> categories,
+			List<String> brands, List<String> colors, Integer howLike, List<String> uuids) {
+		BaseDao<ClotheDTO> baseDao = new BaseDao<>();
+			
+		String query = "SELECT * FROM TWSS_CLOTHES ";
+		query += "WHERE USERNAME = :username ";
+		query += "AND TYPE = :type ";
+		query += !categories.isEmpty() ? "AND CATEGORY IN (<categories>) " : " ";
+		query += !brands.isEmpty() ? "AND BRAND IN (<brands>) " : " ";
+		query += !colors.isEmpty() ? "AND BASE_COLOR IN (<colors>) " : " ";
+		query += howLike != null ? "AND HOW_LIKE = :howLike " : " ";
+		query += !uuids.isEmpty() ? "AND UUID NOT IN (<uuids>) " : " ";
+		query += "ORDER BY DBMS_RANDOM.VALUE OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY";
+		
+		Map<String, List<String>> typesBindMap = new HashMap<>();
+		typesBindMap.put("categories", categories);
+		typesBindMap.put("brands", brands);
+		typesBindMap.put("colors", colors);
+		typesBindMap.put("uuids", uuids);
+		query = baseDao.generateBingIdentifier(query, typesBindMap);
+		
+		Handle h = dbi.open();
+		@SuppressWarnings("unchecked")
+		Query<ClotheDTO> q = h.createQuery(query)
+				.map(new ClothesMapperJdbi())
+				.bind("username", username)
+				.bind("howLike", howLike)
+				.bind("type", type);
+		
+		q = baseDao.addInClauseBind(q, typesBindMap);
+		ClotheDTO output = (ClotheDTO) q.first();
+          
+        return output;
+	}
+	
 
 	// INSERTS--------------------------------------------------------------------------------------------------------------------------------------
 

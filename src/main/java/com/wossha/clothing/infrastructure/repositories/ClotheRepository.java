@@ -2,6 +2,8 @@ package com.wossha.clothing.infrastructure.repositories;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -90,6 +92,46 @@ public class ClotheRepository implements Repository<Clothe> {
 		resultMap.put("pagination", pagination);
 		resultMap.put("result", clothes);
 		return resultMap;
+	}
+	
+	public List<ClotheDTO> getOutfit(String username, SearchCriteriaDTO searchCriteria, String uuid, String type) {
+clothesDao = dbi.onDemand(ClothesDao.class);
+		
+		List<ClotheDTO> clothes = new ArrayList<>();
+		List<String> types = new ArrayList<>();
+		List<String> uuids = new ArrayList<>();
+
+		if(type==null || type.equals("") || type.equals("null")) {
+			types = searchCriteria.getTypes().stream().map(x -> x.getId())
+					.collect(Collectors.toList());
+		}else {
+			types.add(type);
+		}
+		
+		if(uuid!= null) {
+			String[] parts = uuid.split(",");
+			uuids.addAll(Arrays.asList(parts));
+		}
+		
+		List<String> categories = searchCriteria.getCategories().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		List<String> brands = searchCriteria.getBrands().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		List<String> colors = searchCriteria.getColors().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		
+		if(types.isEmpty()) {
+			types = clothesDao.getTypesByUser(username);
+		}
+		
+		for (String item : types) {
+			ClotheDTO clothe = clothesDao.getOutfit(dbi, username, item, categories, brands, colors, searchCriteria.getHowLike(), uuids);
+			if(clothe != null) {
+				clothes.add(clothe);
+			}
+			
+		}
+		return clothes;
 	}
 	
 
@@ -238,6 +280,8 @@ public class ClotheRepository implements Repository<Clothe> {
 		clothesDao = dbi.onDemand(ClothesDao.class);
 		return clothesDao.getEventsByView(username, startDate, endDate);
 	}
+
+	
 
 	
 

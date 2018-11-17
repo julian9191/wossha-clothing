@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +17,7 @@ import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
+import com.wossha.clothing.dto.SearchCriteriaDTO;
 import com.wossha.clothing.dto.SearchCriteriaParamsDTO;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import java.util.List;
@@ -83,6 +86,17 @@ public class ClothingController extends ControllerWrapper {
 		ClotheDTO c = repo.findClotheByUuid(username, uuid);
 		return c;
 	}
+	
+	@PostMapping(value = "/outfit")
+	public @ResponseBody List<ClotheDTO> getOutfit(@RequestBody SearchCriteriaDTO searchCriteria, @RequestParam("uuid") String uuid,
+			@RequestParam("type") String type) throws BusinessException {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getPrincipal().toString();
+
+		List<ClotheDTO> c = repo.getOutfit(username, searchCriteria, uuid, type);
+		return c;
+	}
+	
 
 	// SEARCH----------------------------------------------------------------------------------------------------------
 
