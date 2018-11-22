@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.wossha.clothing.commands.calendar.removeClotheFromDay.model.RemoveClotheFromDay;
 import com.wossha.clothing.dto.ClotheDTO;
-import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
-import com.wossha.json.events.events.api.Event;
+import com.wossha.clothing.infrastructure.repositories.CalendarRepository;
 import com.wossha.msbase.commands.CommandResult;
 import com.wossha.msbase.commands.ICommand;
 import com.wossha.msbase.exceptions.BusinessException;
@@ -18,7 +17,7 @@ public class RemoveClotheFromDayCommand implements ICommand<RemoveClotheFromDay>
 	private String username;
 
 	@Autowired
-	private ClotheRepository repo;
+	private CalendarRepository repo;
 
 	@Override
 	public String commandName() {

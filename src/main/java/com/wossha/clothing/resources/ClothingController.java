@@ -19,6 +19,7 @@ import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
 import com.wossha.clothing.dto.SearchCriteriaDTO;
 import com.wossha.clothing.dto.SearchCriteriaParamsDTO;
+import com.wossha.clothing.infrastructure.repositories.CalendarRepository;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,8 @@ public class ClothingController extends ControllerWrapper {
 
 	@Autowired
 	private ClotheRepository repo;
+	@Autowired
+	private CalendarRepository calendarRepo;
 
 	@GetMapping(value = "/clothes/{orderedBy}")
 	public @ResponseBody Map<String, Object> getClothes(@PathVariable String orderedBy, @RequestParam("init") int init,
@@ -125,7 +128,7 @@ public class ClothingController extends ControllerWrapper {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 		
-		SearchCriteriaParamsDTO c = repo.getSearchCriteriaParamsByUser(username);
+		SearchCriteriaParamsDTO c = calendarRepo.getSearchCriteriaParamsByUser(username);
 		return c;
 	}
 

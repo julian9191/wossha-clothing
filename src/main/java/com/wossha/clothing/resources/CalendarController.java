@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wossha.clothing.dto.CalendarClotheDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.SearchCriteriaDTO;
+import com.wossha.clothing.infrastructure.repositories.CalendarRepository;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 
 import java.util.Date;
@@ -38,6 +39,8 @@ public class CalendarController extends ControllerWrapper {
 
 	@Autowired
 	private ClotheRepository repo;
+	@Autowired
+	private CalendarRepository calendarRepo;
 
 	@PostMapping(value = "/search-clothing")
 	public @ResponseBody Map<String, Object> searchClothing(@RequestBody SearchCriteriaDTO searchCriteria, @RequestParam("init") int init,
@@ -55,7 +58,7 @@ public class CalendarController extends ControllerWrapper {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
-		List<ClotheDTO> c = repo.getDayClothing(username, date);
+		List<ClotheDTO> c = calendarRepo.getDayClothing(username, date);
 		return c;
 	}
 	
@@ -65,7 +68,7 @@ public class CalendarController extends ControllerWrapper {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
-		String c = repo.getDayDescription(username, date);
+		String c = calendarRepo.getDayDescription(username, date);
 		Map<String, Object> result = new HashMap<>();
 		result.put("description", c);
 		return result;
@@ -78,7 +81,7 @@ public class CalendarController extends ControllerWrapper {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
-		List<CalendarClotheDTO> c = repo.getEventsByView(username, startDate, endDate);
+		List<CalendarClotheDTO> c = calendarRepo.getEventsByView(username, startDate, endDate);
 		return c;
 	}
 

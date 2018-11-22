@@ -3,7 +3,7 @@ package com.wossha.clothing.commands.calendar.AddDayDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.wossha.clothing.commands.calendar.AddDayDescription.model.AddDayDescription;
-import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
+import com.wossha.clothing.infrastructure.repositories.CalendarRepository;
 import com.wossha.msbase.commands.CommandResult;
 import com.wossha.msbase.commands.ICommand;
 import com.wossha.msbase.exceptions.BusinessException;
@@ -16,7 +16,7 @@ public class AddDayDescriptionCommand implements ICommand<AddDayDescription> {
 	private String username;
 
 	@Autowired
-	private ClotheRepository repo;
+	private CalendarRepository repo;
 
 	@Override
 	public String commandName() {

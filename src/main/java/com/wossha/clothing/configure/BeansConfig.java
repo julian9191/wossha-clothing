@@ -18,7 +18,9 @@ import com.wossha.clothing.commands.clothing.editClothe.EditClotheCommand;
 import com.wossha.clothing.commands.clothing.editClothe.EditClotheSerializer;
 import com.wossha.clothing.commands.clothing.removeClothe.RemoveClotheCommand;
 import com.wossha.clothing.commands.clothing.removeClothe.RemoveClotheSerializer;
+import com.wossha.clothing.infrastructure.repositories.CalendarRepository;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
+import com.wossha.clothing.infrastructure.repositories.StatisticsRepository;
 import com.wossha.clothing.infrastructure.jms.EventSerializers;
 
 @Configuration
@@ -28,7 +30,17 @@ public class BeansConfig {
 	public ClotheRepository clotheRpository() {
 			return new ClotheRepository();
 	}
-
+	
+	@Bean
+	public CalendarRepository calendarRepository() {
+			return new CalendarRepository();
+	}
+	
+	@Bean
+	public StatisticsRepository statisticsRepository() {
+			return new StatisticsRepository();
+	}
+	
 	//commands--------------------------------------------------
 	@Bean
 	public CreateClotheCommand createClotheCommand() {
