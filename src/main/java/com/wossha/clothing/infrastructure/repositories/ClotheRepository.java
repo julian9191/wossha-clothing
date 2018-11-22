@@ -83,9 +83,9 @@ public class ClotheRepository implements Repository<Clothe> {
 		List<String> colors = searchCriteria.getColors().stream().map(x -> x.getId())
 				.collect(Collectors.toList());
 		
-		Integer count = clothesDao.countSearchClothesByUser(dbi, username, types, categories, brands, colors, searchCriteria.getHowLike());
+		Integer count = clothesDao.countSearchClothesByUser(dbi, username, types, categories, brands, colors, searchCriteria.getHowLike(), searchCriteria.getNoWearingDaysSimbol(), searchCriteria.getNoWearingDays());
 
-		List<ClotheDTO> clothes = clothesDao.searchClothesByUser(dbi, username, types, categories, brands, colors, searchCriteria.getHowLike(), init, limit);
+		List<ClotheDTO> clothes = clothesDao.searchClothesByUser(dbi, username, types, categories, brands, colors, searchCriteria.getHowLike(), init, limit, searchCriteria.getNoWearingDaysSimbol(), searchCriteria.getNoWearingDays());
 
 		Pagination pagination = new Pagination(count, init, limit);
 		Map<String, Object> resultMap = new HashMap<>();
@@ -125,7 +125,7 @@ clothesDao = dbi.onDemand(ClothesDao.class);
 		}
 		
 		for (String item : types) {
-			ClotheDTO clothe = clothesDao.getOutfit(dbi, username, item, categories, brands, colors, searchCriteria.getHowLike(), uuids);
+			ClotheDTO clothe = clothesDao.getOutfit(dbi, username, item, categories, brands, colors, searchCriteria.getHowLike(), uuids, searchCriteria.getNoWearingDaysSimbol(), searchCriteria.getNoWearingDays());
 			if(clothe != null) {
 				clothes.add(clothe);
 			}
