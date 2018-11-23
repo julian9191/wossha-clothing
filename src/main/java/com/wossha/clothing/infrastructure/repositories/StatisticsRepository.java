@@ -1,18 +1,11 @@
 package com.wossha.clothing.infrastructure.repositories;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.skife.jdbi.v2.IDBI;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.wossha.clothing.commands.clothing.createClothe.model.Clothe;
-import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.StatisticsDTO;
-import com.wossha.clothing.dto.StatisticsMapDTO;
 import com.wossha.clothing.infrastructure.dao.clothe.ClothesDao;
 import com.wossha.clothing.infrastructure.dao.statistics.StatisticsDao;
-import com.wossha.msbase.models.Pagination;
 
 
 public class StatisticsRepository implements Repository<Clothe> {
@@ -30,7 +23,13 @@ public class StatisticsRepository implements Repository<Clothe> {
 		Integer count = clothesDao.countFindAllClothesByUser(username);
 		
 		statisticsDao = dbi.onDemand(StatisticsDao.class);
+		statistics.setTotal(count);
 		statistics.setTypes(statisticsDao.getTypePieData(username, count));
+		statistics.setCategories(statisticsDao.getCategoryPieData(username, count));
+		statistics.setHowLike(statisticsDao.getHowLikePieData(username, count));
+		statistics.setBrands(statisticsDao.getBrandPieData(username, count));
+		statistics.setColors(statisticsDao.getColorPieData(username, count));
+		statistics.setMostUsedClothing(statisticsDao.getMostUsedClothing(username));
 
 		return statistics;
 	}

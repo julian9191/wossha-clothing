@@ -14,7 +14,8 @@ public class StatisticsMapMapperJdbi implements ResultSetMapper<StatisticsMapDTO
         
 		return new StatisticsMapDTO(
                 r.getString("KEY"),
-                r.getString("VALUE")
+                r.getString("VALUE"),
+                r.getString("TOTAL")
         );
         
     }

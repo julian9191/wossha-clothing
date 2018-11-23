@@ -4,6 +4,13 @@ public class StatisticsMapDTO {
 	
 	private String key;
 	private String value;
+	private String total;
+	
+	public StatisticsMapDTO(String key, String value, String total) {
+		this.key = key;
+		this.value = value;
+		this.total = total;
+	}
 	
 	public StatisticsMapDTO(String key, String value) {
 		this.key = key;
@@ -27,4 +34,14 @@ public class StatisticsMapDTO {
 	public void setValue(String value) {
 		this.value = value;
 	}
+
+	public String getTotal() {
+		return total;
+	}
+
+	public void setTotal(String total) {
+		this.total = total;
+	}
+	
+	
 }
