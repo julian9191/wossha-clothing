@@ -14,6 +14,7 @@ import com.wossha.clothing.commands.clothing.createClothe.model.Clothe;
 import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClotheDTO;
+import com.wossha.clothing.dto.ClotheViewDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
 import com.wossha.clothing.dto.ColorDTO;
@@ -24,6 +25,7 @@ import com.wossha.clothing.infrastructure.dao.clothe.ClothesDao;
 import com.wossha.clothing.infrastructure.dao.clothingcategory.ClothingCategoryDao;
 import com.wossha.clothing.infrastructure.dao.clothingtype.ClothingTypeDao;
 import com.wossha.clothing.infrastructure.dao.color.ColorDao;
+import com.wossha.clothing.infrastructure.dao.statistics.StatisticsDao;
 import com.wossha.msbase.models.Pagination;
 
 public class ClotheRepository implements Repository<Clothe> {
@@ -37,6 +39,7 @@ public class ClotheRepository implements Repository<Clothe> {
 	private BrandDao brandDao;
 	private BaseColorDao baseColorDao;
 	private ColorDao colorDao;
+	private StatisticsDao statisticsDao;
 
 	@Override
 	public void add(Clothe clothe) {
@@ -145,6 +148,19 @@ clothesDao = dbi.onDemand(ClothesDao.class);
 	public ClotheDTO findClotheByUuid(String username, String uuid) {
 		clothesDao = dbi.onDemand(ClothesDao.class);
 		return clothesDao.findClotheByUuid(username, uuid);
+	}
+	
+	public ClotheViewDTO getClotheViewByUuid(String username, String uuid) {
+		clothesDao = dbi.onDemand(ClothesDao.class);
+		statisticsDao = dbi.onDemand(StatisticsDao.class);
+		
+		ClotheViewDTO view = new ClotheViewDTO();
+		view.setClothe(clothesDao.findClotheByUuid(username, uuid));
+		view.setUseTimesByMonth(statisticsDao.getUseTimesByMonth(username, view.getClothe().getId()));
+		view.setUseTimes(statisticsDao.getUseTimes(username, view.getClothe().getId()));
+		view.setUseDates(statisticsDao.getUseDates(username, view.getClothe().getId()));
+		
+		return view;
 	}
 
 	public List<ClothingTypeDTO> getAllClothingTypes() {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wossha.clothing.dto.BaseColorDTO;
 import com.wossha.clothing.dto.BrandDTO;
 import com.wossha.clothing.dto.ClotheDTO;
+import com.wossha.clothing.dto.ClotheViewDTO;
 import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
 import com.wossha.clothing.dto.SearchCriteriaDTO;
@@ -89,6 +90,15 @@ public class ClothingController extends ControllerWrapper {
 		String username = auth.getPrincipal().toString();
 
 		ClotheDTO c = repo.findClotheByUuid(username, uuid);
+		return c;
+	}
+	
+	@GetMapping(value = "/clothe-view/{uuid}")
+	public @ResponseBody ClotheViewDTO getClotheView(@PathVariable String uuid) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getPrincipal().toString();
+
+		ClotheViewDTO c = repo.getClotheViewByUuid(username, uuid);
 		return c;
 	}
 
