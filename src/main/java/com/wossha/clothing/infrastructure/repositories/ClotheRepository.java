@@ -53,10 +53,23 @@ public class ClotheRepository implements Repository<Clothe> {
 		return clothesDao.findClotheByUuid(uuid);
 	}
 
-	public Map<String, Object> findClothesByUser(String username, String orderedBy, int init, int limit) {
+	public Map<String, Object> findClothesByUser(String username, SearchCriteriaDTO searchCriteria, String orderedBy, int init, int limit) {
 		clothesDao = dbi.onDemand(ClothesDao.class);
-		Integer count = clothesDao.countFindAllClothesByUser(username);
-		List<ClotheDTO> clothes = clothesDao.findClothesByUser(username, init, limit, orderedBy);
+		
+		List<String> types = searchCriteria.getTypes().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		List<String> categories = searchCriteria.getCategories().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		List<String> brands = searchCriteria.getBrands().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		List<String> colors = searchCriteria.getColors().stream().map(x -> x.getId())
+				.collect(Collectors.toList());
+		
+		//Integer count = clothesDao.countFindAllClothesByUser(username);
+		Integer count = clothesDao.countSearchClothesByUser(dbi, username, types, categories, brands, colors, searchCriteria.getHowLike(), searchCriteria.getNoWearingDaysSimbol(), searchCriteria.getNoWearingDays());
+		
+		//List<ClotheDTO> clothes = clothesDao.findClothesByUser(username, init, limit, orderedBy);
+		List<ClotheDTO> clothes = clothesDao.searchClothesByUser(dbi, username, types, categories, brands, colors, searchCriteria.getHowLike(), orderedBy, init, limit, searchCriteria.getNoWearingDaysSimbol(), searchCriteria.getNoWearingDays());
 
 		Pagination pagination = new Pagination(count, init, limit);
 		Map<String, Object> resultMap = new HashMap<>();
@@ -79,7 +92,7 @@ public class ClotheRepository implements Repository<Clothe> {
 		
 		Integer count = clothesDao.countSearchClothesByUser(dbi, username, types, categories, brands, colors, searchCriteria.getHowLike(), searchCriteria.getNoWearingDaysSimbol(), searchCriteria.getNoWearingDays());
 
-		List<ClotheDTO> clothes = clothesDao.searchClothesByUser(dbi, username, types, categories, brands, colors, searchCriteria.getHowLike(), init, limit, searchCriteria.getNoWearingDaysSimbol(), searchCriteria.getNoWearingDays());
+		List<ClotheDTO> clothes = clothesDao.searchClothesByUser(dbi, username, types, categories, brands, colors, searchCriteria.getHowLike(), null, init, limit, searchCriteria.getNoWearingDaysSimbol(), searchCriteria.getNoWearingDays());
 
 		Pagination pagination = new Pagination(count, init, limit);
 		Map<String, Object> resultMap = new HashMap<>();

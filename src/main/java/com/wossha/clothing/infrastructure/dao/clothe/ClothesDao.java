@@ -58,7 +58,7 @@ public abstract class ClothesDao {
 	public abstract List<BaseColorDTO> getColorNamesByUser(@Bind("username") String username);
 
 	public List<ClotheDTO> searchClothesByUser(IDBI dbi, String username, List<String> types, List<String> categories,
-			List<String> brands, List<String> colors, Integer howLike, int init, int limit, String noWearingDaysSimbol,
+			List<String> brands, List<String> colors, Integer howLike, String orderedBy, int init, int limit, String noWearingDaysSimbol,
 			Integer noWearingDays) {
 
 		BaseDao<ClotheDTO> baseDao = new BaseDao<>();
@@ -75,7 +75,12 @@ public abstract class ClothesDao {
 			query += noWearingDaysSubQuery(noWearingDaysSimbol);
 		}
 		
-		query += "ORDER BY CL.NAME";
+		if(orderedBy != null && !orderedBy.equals("")) {
+			query += "ORDER BY "+orderedBy+" OFFSET :init ROWS FETCH NEXT :limit ROWS ONLY";
+		}else {
+			query += "ORDER BY CL.NAME";
+		}
+		
 
 		Map<String, List<String>> typesBindMap = new HashMap<>();
 		typesBindMap.put("types", types);
@@ -89,7 +94,9 @@ public abstract class ClothesDao {
 		Query<ClotheDTO> q = h.createQuery(query).map(new ClothesMapperJdbi())
 						.bind("username", username)
 						.bind("howLike", howLike)
-						.bind("noWearingDays", noWearingDays);
+						.bind("noWearingDays", noWearingDays)
+						.bind("init", init)
+						.bind("limit", limit);
 
 		q = baseDao.addInClauseBind(q, typesBindMap);
 		List<ClotheDTO> output = (List<ClotheDTO>) q.list();

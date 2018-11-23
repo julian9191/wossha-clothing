@@ -42,9 +42,11 @@ public class ClothingController extends ControllerWrapper {
 	@Autowired
 	private CalendarRepository calendarRepo;
 
-	@GetMapping(value = "/clothes/{orderedBy}")
-	public @ResponseBody Map<String, Object> getClothes(@PathVariable String orderedBy, @RequestParam("init") int init,
-			@RequestParam("limit") int limit) throws BusinessException {
+	@PostMapping(value = "/clothes/{orderedBy}")
+	public @ResponseBody Map<String, Object> getClothes(@RequestBody SearchCriteriaDTO searchCriteria,
+			@PathVariable String orderedBy, @RequestParam("init") int init, @RequestParam("limit") int limit)
+			throws BusinessException {
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
@@ -53,7 +55,7 @@ public class ClothingController extends ControllerWrapper {
 			throw new BusinessException("Parámetro de ordenamiento no permitido");
 		}
 
-		Map<String, Object> c = repo.findClothesByUser(username, orderedBy, init, limit);
+		Map<String, Object> c = repo.findClothesByUser(username, searchCriteria, orderedBy, init, limit);
 		return c;
 	}
 
@@ -80,7 +82,7 @@ public class ClothingController extends ControllerWrapper {
 		Map<String, Integer> c = repo.getColorsMap();
 		return c;
 	}
-	
+
 	@GetMapping(value = "/clothe/{uuid}")
 	public @ResponseBody ClotheDTO getClothe(@PathVariable String uuid) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -89,17 +91,16 @@ public class ClothingController extends ControllerWrapper {
 		ClotheDTO c = repo.findClotheByUuid(username, uuid);
 		return c;
 	}
-	
+
 	@PostMapping(value = "/outfit")
-	public @ResponseBody List<ClotheDTO> getOutfit(@RequestBody SearchCriteriaDTO searchCriteria, @RequestParam("uuid") String uuid,
-			@RequestParam("type") String type) throws BusinessException {
+	public @ResponseBody List<ClotheDTO> getOutfit(@RequestBody SearchCriteriaDTO searchCriteria,
+			@RequestParam("uuid") String uuid, @RequestParam("type") String type) throws BusinessException {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		List<ClotheDTO> c = repo.getOutfit(username, searchCriteria, uuid, type);
 		return c;
 	}
-	
 
 	// SEARCH----------------------------------------------------------------------------------------------------------
 
@@ -120,14 +121,15 @@ public class ClothingController extends ControllerWrapper {
 		List<BrandDTO> c = repo.searchBrands(word);
 		return c;
 	}
-	
-	// SEARCH CRITERIA-------------------------------------------------------------------------------------------------------
-	
+
+	// SEARCH
+	// CRITERIA-------------------------------------------------------------------------------------------------------
+
 	@GetMapping(value = "/search-criteria-params")
 	public @ResponseBody SearchCriteriaParamsDTO getSearchCriteriaParamsByUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
-		
+
 		SearchCriteriaParamsDTO c = calendarRepo.getSearchCriteriaParamsByUser(username);
 		return c;
 	}
