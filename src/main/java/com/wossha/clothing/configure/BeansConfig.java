@@ -1,8 +1,14 @@
 package com.wossha.clothing.configure;
 
+import java.util.TimeZone;
+
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wossha.clothing.commands.CommandSerializers;
 import com.wossha.clothing.commands.calendar.AddDayDescription.AddDayDescriptionCommand;
 import com.wossha.clothing.commands.calendar.AddDayDescription.AddDayDescriptionSerializer;
@@ -117,6 +123,15 @@ public class BeansConfig {
 	//--------------------------------------------------------------
 	
 	@Bean
+	public ObjectMapper objectMapper() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		TimeZone tz = TimeZone.getDefault();
+		objectMapper.setTimeZone(tz);
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		return objectMapper;
+	}
+	
+	@Bean
 	public CommandSerializers commandSerializers() {
 		CommandSerializers cs = new CommandSerializers();
 		cs.setCreateClotheSerializerr(createClotheSerializer());
@@ -136,6 +151,17 @@ public class BeansConfig {
 		//es.setSavePictureEventSerializer(savePictureEventSerializer());
 		es.initMapper();
 		return es;
+	}
+	
+	@Bean
+	public Jackson2ObjectMapperBuilderCustomizer init() {
+	    return new Jackson2ObjectMapperBuilderCustomizer() {
+
+	    	@Override
+	        public void customize(Jackson2ObjectMapperBuilder builder) {
+	            builder.timeZone(TimeZone.getDefault());
+	        }
+	    };
 	}
 	
 }

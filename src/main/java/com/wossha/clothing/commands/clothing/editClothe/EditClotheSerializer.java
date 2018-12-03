@@ -13,7 +13,8 @@ import com.wossha.msbase.commands.ICommandSerializer;
 @Component
 public class EditClotheSerializer implements ICommandSerializer {
 	
-	private ObjectMapper m = new ObjectMapper();
+	@Autowired
+	private ObjectMapper m;
 	
 	@Autowired
 	private EditClotheCommand command;

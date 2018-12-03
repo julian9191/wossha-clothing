@@ -19,6 +19,9 @@ import com.wossha.clothing.dto.SearchCriteriaDTO;
 import com.wossha.clothing.infrastructure.repositories.CalendarRepository;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,9 +55,9 @@ public class CalendarController extends ControllerWrapper {
 		return c;
 	}
 	
-	@GetMapping(value = "/day-clothing/{longDate}")
-	public @ResponseBody List<ClotheDTO> getDayClothing(@PathVariable Long longDate) throws BusinessException {
-		Date date = new Date(longDate);
+	@GetMapping(value = "/day-clothing/{stringDate}")
+	public @ResponseBody List<ClotheDTO> getDayClothing(@PathVariable String stringDate) throws BusinessException, ParseException {
+		Date date=new SimpleDateFormat("yyyy-MM-dd").parse(stringDate); 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
@@ -62,9 +65,9 @@ public class CalendarController extends ControllerWrapper {
 		return c;
 	}
 	
-	@GetMapping(value = "/day-description/{longDate}")
-	public @ResponseBody Map<String, Object> getDayDescription(@PathVariable Long longDate) throws BusinessException {
-		Date date = new Date(longDate);
+	@GetMapping(value = "/day-description/{stringDate}")
+	public @ResponseBody Map<String, Object> getDayDescription(@PathVariable String stringDate) throws BusinessException, ParseException {
+		Date date=new SimpleDateFormat("yyyy-MM-dd").parse(stringDate); 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 

@@ -12,7 +12,8 @@ import com.wossha.msbase.commands.ICommandSerializer;
 @Component
 public class AddOutfitToCalendarSerializer implements ICommandSerializer {
 	
-	private ObjectMapper m = new ObjectMapper();
+	@Autowired
+	private ObjectMapper m;
 	
 	@Autowired
 	private AddOutfitToCalendarCommand command;
