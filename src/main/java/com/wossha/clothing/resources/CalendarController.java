@@ -12,23 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.wossha.clothing.dto.CalendarClotheDTO;
 import com.wossha.clothing.dto.ClotheDTO;
 import com.wossha.clothing.dto.SearchCriteriaDTO;
+import com.wossha.clothing.infrastructure.filters.UsernameInfoAuthenticationToken;
 import com.wossha.clothing.infrastructure.repositories.CalendarRepository;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
-
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import com.wossha.msbase.controllers.ControllerWrapper;
 import com.wossha.msbase.exceptions.BusinessException;
 
@@ -48,7 +44,7 @@ public class CalendarController extends ControllerWrapper {
 	@PostMapping(value = "/search-clothing")
 	public @ResponseBody Map<String, Object> searchClothing(@RequestBody SearchCriteriaDTO searchCriteria, @RequestParam("init") int init,
 			@RequestParam("limit") int limit) throws BusinessException {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		Map<String, Object> c = repo.searchClothesByUser(username, searchCriteria, init, limit);
@@ -58,7 +54,7 @@ public class CalendarController extends ControllerWrapper {
 	@GetMapping(value = "/day-clothing/{stringDate}")
 	public @ResponseBody List<ClotheDTO> getDayClothing(@PathVariable String stringDate) throws BusinessException, ParseException {
 		Date date=new SimpleDateFormat("yyyy-MM-dd").parse(stringDate); 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		List<ClotheDTO> c = calendarRepo.getDayClothing(username, date);
@@ -68,7 +64,7 @@ public class CalendarController extends ControllerWrapper {
 	@GetMapping(value = "/day-description/{stringDate}")
 	public @ResponseBody Map<String, Object> getDayDescription(@PathVariable String stringDate) throws BusinessException, ParseException {
 		Date date=new SimpleDateFormat("yyyy-MM-dd").parse(stringDate); 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		String c = calendarRepo.getDayDescription(username, date);
@@ -81,7 +77,7 @@ public class CalendarController extends ControllerWrapper {
 	public @ResponseBody List<CalendarClotheDTO> getEventsByView(@PathVariable Long startLongDate, @PathVariable Long endLongDate) throws BusinessException {
 		Date startDate = new Date(startLongDate);
 		Date endDate = new Date(endLongDate);
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		List<CalendarClotheDTO> c = calendarRepo.getEventsByView(username, startDate, endDate);

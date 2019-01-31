@@ -20,11 +20,11 @@ import com.wossha.clothing.dto.ClothingCategoryDTO;
 import com.wossha.clothing.dto.ClothingTypeDTO;
 import com.wossha.clothing.dto.SearchCriteriaDTO;
 import com.wossha.clothing.dto.SearchCriteriaParamsDTO;
+import com.wossha.clothing.infrastructure.filters.UsernameInfoAuthenticationToken;
 import com.wossha.clothing.infrastructure.repositories.CalendarRepository;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import java.util.List;
 import java.util.Map;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.wossha.msbase.controllers.ControllerWrapper;
@@ -48,7 +48,7 @@ public class ClothingController extends ControllerWrapper {
 			@PathVariable String orderedBy, @RequestParam("init") int init, @RequestParam("limit") int limit)
 			throws BusinessException {
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		if (!orderedBy.equals("NAME") && !orderedBy.equals("TYPE") && !orderedBy.equals("CATEGORY")
@@ -86,7 +86,7 @@ public class ClothingController extends ControllerWrapper {
 
 	@GetMapping(value = "/clothe/{uuid}")
 	public @ResponseBody ClotheDTO getClothe(@PathVariable String uuid) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		ClotheDTO c = repo.findClotheByUuid(username, uuid);
@@ -95,7 +95,7 @@ public class ClothingController extends ControllerWrapper {
 	
 	@GetMapping(value = "/clothe-view/{uuid}")
 	public @ResponseBody ClotheViewDTO getClotheView(@PathVariable String uuid) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		ClotheViewDTO c = repo.getClotheViewByUuid(username, uuid);
@@ -105,7 +105,7 @@ public class ClothingController extends ControllerWrapper {
 	@PostMapping(value = "/outfit")
 	public @ResponseBody List<ClotheDTO> getOutfit(@RequestBody SearchCriteriaDTO searchCriteria,
 			@RequestParam("uuid") String uuid, @RequestParam("type") String type) throws BusinessException {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		List<ClotheDTO> c = repo.getOutfit(username, searchCriteria, uuid, type);
@@ -137,7 +137,7 @@ public class ClothingController extends ControllerWrapper {
 
 	@GetMapping(value = "/search-criteria-params")
 	public @ResponseBody SearchCriteriaParamsDTO getSearchCriteriaParamsByUser() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		SearchCriteriaParamsDTO c = calendarRepo.getSearchCriteriaParamsByUser(username);

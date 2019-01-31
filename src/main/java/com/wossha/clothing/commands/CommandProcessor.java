@@ -10,7 +10,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wossha.clothing.infrastructure.filters.UsernameInfoAuthenticationToken;
 import com.wossha.json.events.events.api.Event;
 import com.wossha.msbase.commands.CommandResult;
 import com.wossha.msbase.commands.ICommand;
@@ -57,7 +57,7 @@ public class CommandProcessor extends ControllerWrapper{
             @SuppressWarnings("rawtypes")
 			ICommand command = cs.deserialize(json);
 
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
     		String username = auth.getPrincipal().toString();
             command.setUsername(username);
             CommandResult result = command.execute();

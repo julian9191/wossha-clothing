@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.wossha.clothing.dto.StatisticsDTO;
+import com.wossha.clothing.infrastructure.filters.UsernameInfoAuthenticationToken;
 import com.wossha.clothing.infrastructure.repositories.StatisticsRepository;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.wossha.msbase.controllers.ControllerWrapper;
 import com.wossha.msbase.exceptions.BusinessException;
@@ -29,7 +29,7 @@ public class StatisticsController extends ControllerWrapper {
 	
 	@GetMapping(value = "/general-statistics")
 	public @ResponseBody StatisticsDTO getGeneralStatistics() throws BusinessException {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsernameInfoAuthenticationToken auth = (UsernameInfoAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getPrincipal().toString();
 
 		StatisticsDTO c = statisticsRepo.getTypePieData(username);

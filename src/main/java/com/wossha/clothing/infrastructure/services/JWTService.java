@@ -2,31 +2,19 @@ package com.wossha.clothing.infrastructure.services;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.jackson2.SimpleGrantedAuthorityMixin;
 
 @Component
 public class JWTService {
@@ -36,6 +24,10 @@ public static final String SECRET = Base64Utils.encodeToString("Alguna.Clave.Sec
 	//public static final long EXPIRATION_DATE = 30000L;//3600000/120
 	public static final String TOKEN_PREFIX = "Bearer ";
 	public static final String HEADER_STRING = "Authorization";
+	public static final String PARAM_STRING = "token";
+	public static final String FIRST_NAME_PARAM = "firstName";
+	public static final String LAST_NAME_PARAM = "lastName";
+	public static final String PROFILE_PICTURE_PARAM = "profilePicture";
 	
 	public String create(Authentication auth) throws IOException {
 
@@ -76,8 +68,11 @@ public static final String SECRET = Base64Utils.encodeToString("Alguna.Clave.Sec
 
 	
 	public String getUsername(String token) {
-		// TODO Auto-generated method stub
 		return getClaims(token).getSubject();
+	}
+	
+	public String getClaim(String token, String key) {
+		return (String) getClaims(token).get(key);
 	}
 
 	
