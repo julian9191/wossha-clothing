@@ -10,6 +10,7 @@ import com.wossha.clothing.infrastructure.mapper.MapperDozer;
 import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import com.wossha.json.events.events.api.Event;
 import com.wossha.json.events.events.pictures.SavePictureEvent.Message;
+import com.wossha.json.events.events.pictures.SavePictureEvent.PictureInfo;
 import com.wossha.json.events.events.pictures.SavePictureEvent.SavePictureEvent;
 import com.wossha.json.events.services.UUIDGenerator;
 import com.wossha.msbase.commands.CommandResult;
@@ -87,8 +88,13 @@ public class EditClotheCommand implements ICommand<EditClothe> {
 
 	private SavePictureEvent generateSavePictureEvent(String uuidPicture, String picName, String fileType,
 			Integer fileSize, String value, String uuidPictureToRemove) {
-		Message message = new Message(uuidPicture, picName, fileType, PictureTypesEnum.CLOTHE_PICTURE.name(), fileSize,
+		
+		PictureInfo pictureInfo = new PictureInfo(uuidPicture, picName, fileType, PictureTypesEnum.CLOTHE_PICTURE.name(), fileSize,
 				value, uuidPictureToRemove);
+		
+		Message message = new Message();
+		message.getPictures().add(pictureInfo);
+
 		SavePictureEvent event = new SavePictureEvent(WosshaClothingApplication.APP_NAME, this.username, message);
 		return event;
 	}

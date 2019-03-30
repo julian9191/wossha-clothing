@@ -1,5 +1,8 @@
 package com.wossha.clothing.commands.clothing.removeClothe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -64,7 +67,9 @@ public class RemoveClotheCommand implements ICommand<RemoveClothe> {
 
 	
 	private RemovePictureEvent generateRemovePictureEvent(String uuidPicture) {
-		Message message = new Message(uuidPicture);
+		List<String> uuidPictures = new ArrayList<>();
+		uuidPictures.add(uuidPicture);
+		Message message = new Message(uuidPictures);
 		RemovePictureEvent event = new RemovePictureEvent(WosshaClothingApplication.APP_NAME, this.username, message);
 		return event;
 	}
