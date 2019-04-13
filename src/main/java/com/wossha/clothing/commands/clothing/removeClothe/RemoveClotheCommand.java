@@ -14,10 +14,8 @@ import com.wossha.clothing.infrastructure.repositories.ClotheRepository;
 import com.wossha.json.events.events.api.Event;
 import com.wossha.json.events.events.pictures.RemovePictureEvent.RemovePictureEvent;
 import com.wossha.json.events.events.pictures.RemovePictureEvent.Message;
-import com.wossha.json.events.services.UUIDGenerator;
 import com.wossha.msbase.commands.CommandResult;
 import com.wossha.msbase.commands.ICommand;
-import com.wossha.msbase.enums.PictureTypesEnum;
 import com.wossha.msbase.exceptions.BusinessException;
 import com.wossha.msbase.exceptions.TechnicalException;
 
